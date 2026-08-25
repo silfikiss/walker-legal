@@ -499,3 +499,20 @@ h1 {
         text-align: center;
     }
 }
+/* === Карточки в анкете (для пакетных/разовых услуг) === */
+.quiz-btn.package-btn {
+    background: #eef4ff;
+    border: 2px solid #2a6df4;
+    border-radius: 16px;
+    padding: 18px 20px;
+    font-weight: 700;
+    color: #0b1a33;
+    box-shadow: 0 4px 12px rgba(42, 109, 244, 0.15);
+    transition: 0.25s;
+}
+
+.quiz-btn.package-btn:hover {
+    background: #dce6ff;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(42, 109, 244, 0.25);
+}
