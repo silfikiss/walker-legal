@@ -3,7 +3,6 @@
 let clientType = null;
 let answers = {};
 
-// Данные анкеты
 const quizData = {
     clientType: {
         question: 'Кто обращается?',
@@ -49,85 +48,165 @@ const quizData = {
         ]
     },
 
+    // ===== Детали для бизнеса =====
     businessDetails: {
-        consultation: { question: 'Опишите ваш запрос:', textarea: true },
+        consultation: {
+            question: 'Опишите ваш запрос:',
+            fields: [
+                { name: 'description', label: 'Кратко опишите ситуацию', type: 'textarea', required: false }
+            ]
+        },
         contract: {
             question: 'Что нужно сделать с договором?',
-            options: ['Составить новый договор', 'Проверить существующий договор', 'Согласовать изменения', 'Другое']
+            fields: [
+                { name: 'action', label: 'Что нужно сделать?', type: 'select', options: ['Составить новый договор', 'Проверить существующий договор', 'Согласовать изменения', 'Другое'] },
+                { name: 'amount', label: 'Сумма договора (если применимо)', type: 'text', required: false },
+                { name: 'deadline', label: 'Сроки (если есть)', type: 'text', required: false }
+            ]
         },
-        negotiations: { question: 'Опишите ситуацию с переговорами:', textarea: true },
+        negotiations: {
+            question: 'Опишите ситуацию с переговорами:',
+            fields: [
+                { name: 'description', label: 'Кратко опишите ситуацию', type: 'textarea', required: false }
+            ]
+        },
         debt: {
             question: 'Какая ситуация с задолженностью?',
-            options: ['Нужно подготовить претензию', 'Долг уже просужен, нужно взыскание', 'Нужно защищаться от требований', 'Другое']
+            fields: [
+                { name: 'stage', label: 'Стадия', type: 'select', options: ['Нужно подготовить претензию', 'Долг уже просужен, нужно взыскание', 'Нужно защищаться от требований', 'Другое'] },
+                { name: 'amount', label: 'Сумма задолженности', type: 'text', required: false }
+            ]
         },
         litigation: {
-            question: 'На какой стадии судебный спор?',
-            options: ['Только планируем подавать иск', 'Иск подан, идёт рассмотрение', 'Есть решение, нужно обжаловать', 'Другое']
+            question: 'Опишите судебный спор:',
+            fields: [
+                { name: 'stage', label: 'Стадия спора', type: 'select', options: ['Только планируем подавать иск', 'Иск подан, идёт рассмотрение', 'Есть решение, нужно обжаловать', 'Другое'] },
+                { name: 'court', label: 'Наименование суда (если есть)', type: 'text', required: false },
+                { name: 'case_number', label: 'Номер дела (если есть)', type: 'text', required: false }
+            ]
         },
         support: {
             question: 'Какой формат поддержки вам нужен?',
-            options: ['Разовые консультации', 'Абонентское обслуживание', 'Комплексное сопровождение', 'Другое']
+            fields: [
+                { name: 'format', label: 'Формат', type: 'select', options: ['Разовые консультации', 'Абонентское обслуживание', 'Комплексное сопровождение', 'Другое'] }
+            ]
         },
         corporate: {
             question: 'Какой корпоративный вопрос?',
-            options: ['Создание компании', 'Конфликт владельцев', 'Корпоративные процедуры', 'Другое']
+            fields: [
+                { name: 'type', label: 'Тип вопроса', type: 'select', options: ['Создание компании', 'Конфликт владельцев', 'Корпоративные процедуры', 'Другое'] }
+            ]
         },
         labor: {
             question: 'Какой трудовой вопрос?',
-            options: ['Трудовые договоры', 'Увольнение работника', 'Спор с работником', 'Другое']
+            fields: [
+                { name: 'type', label: 'Тип вопроса', type: 'select', options: ['Трудовые договоры', 'Увольнение работника', 'Спор с работником', 'Другое'] }
+            ]
         },
         ip: {
             question: 'Что нужно защитить?',
-            options: ['Товарный знак', 'Авторские права', 'Патенты', 'Контент и сайт', 'Другое']
+            fields: [
+                { name: 'object', label: 'Объект', type: 'select', options: ['Товарный знак', 'Авторские права', 'Патенты', 'Контент и сайт', 'Другое'] }
+            ]
         },
         advertising: {
             question: 'Какой вопрос по рекламе и данным?',
-            options: ['Рекламные материалы', 'Персональные данные', 'Сайт и документация', 'Другое']
+            fields: [
+                { name: 'type', label: 'Тип вопроса', type: 'select', options: ['Рекламные материалы', 'Персональные данные', 'Сайт и документация', 'Другое'] }
+            ]
         },
         construction: {
             question: 'Какой вопрос по строительству?',
-            options: ['Договор подряда', 'Спор с подрядчиком', 'Разрешительная документация', 'Другое']
+            fields: [
+                { name: 'type', label: 'Тип вопроса', type: 'select', options: ['Договор подряда', 'Спор с подрядчиком', 'Разрешительная документация', 'Другое'] }
+            ]
         },
         government: {
             question: 'Какой вопрос по госоргану?',
-            options: ['Проверка', 'Ответ на предписание', 'Обжалование решения', 'Другое']
+            fields: [
+                { name: 'type', label: 'Тип вопроса', type: 'select', options: ['Проверка', 'Ответ на предписание', 'Обжалование решения', 'Другое'] }
+            ]
         },
-        special: { question: 'Опишите ваш вопрос кратко:', textarea: true },
+        special: {
+            question: 'Опишите ваш вопрос:',
+            fields: [
+                { name: 'description', label: 'Кратко опишите', type: 'textarea', required: false }
+            ]
+        },
         audit: {
             question: 'Что нужно проверить?',
-            options: ['Договоры', 'Интеллектуальная собственность', 'Кадровые документы', 'Всё сразу', 'Другое']
+            fields: [
+                { name: 'objects', label: 'Что проверяем?', type: 'select', options: ['Договоры', 'Интеллектуальная собственность', 'Кадровые документы', 'Всё сразу', 'Другое'] }
+            ]
         },
-        multiple: { question: 'Опишите задачи, которые нужно решить:', textarea: true }
+        multiple: {
+            question: 'Опишите задачи:',
+            fields: [
+                { name: 'description', label: 'Какие задачи нужно решить?', type: 'textarea', required: false }
+            ]
+        }
     },
 
+    // ===== Детали для физлиц =====
     individualDetails: {
         contract: {
             question: 'Что нужно сделать с договором?',
-            options: ['Составить новый договор', 'Проверить существующий договор', 'Согласовать изменения', 'Другое']
+            fields: [
+                { name: 'action', label: 'Что нужно сделать?', type: 'select', options: ['Составить новый договор', 'Проверить существующий договор', 'Согласовать изменения', 'Другое'] }
+            ]
         },
         litigation: {
             question: 'На какой стадии судебный спор?',
-            options: ['Только планируем подавать иск', 'Иск подан, идёт рассмотрение', 'Есть решение, нужно обжаловать', 'Другое']
+            fields: [
+                { name: 'stage', label: 'Стадия спора', type: 'select', options: ['Только планируем подавать иск', 'Иск подан, идёт рассмотрение', 'Есть решение, нужно обжаловать', 'Другое'] },
+                { name: 'description', label: 'Кратко опишите ситуацию', type: 'textarea', required: false }
+            ]
         },
-        negotiations: { question: 'Опишите ситуацию:', textarea: true },
+        negotiations: {
+            question: 'Опишите ситуацию:',
+            fields: [
+                { name: 'description', label: 'Кратко опишите', type: 'textarea', required: false }
+            ]
+        },
         debt: {
             question: 'Какая ситуация с задолженностью?',
-            options: ['Нужно подготовить претензию', 'Долг уже просужен, нужно взыскание', 'Нужно защищаться от требований', 'Другое']
+            fields: [
+                { name: 'stage', label: 'Стадия', type: 'select', options: ['Нужно подготовить претензию', 'Долг уже просужен, нужно взыскание', 'Нужно защищаться от требований', 'Другое'] },
+                { name: 'amount', label: 'Сумма задолженности', type: 'text', required: false }
+            ]
         },
         ip: {
             question: 'Что нужно защитить?',
-            options: ['Авторские права', 'Контент', 'Товарный знак', 'Другое']
+            fields: [
+                { name: 'object', label: 'Объект', type: 'select', options: ['Авторские права', 'Контент', 'Товарный знак', 'Другое'] }
+            ]
         },
         property: {
             question: 'Какой имущественный вопрос?',
-            options: ['Недвижимость', 'Наследство', 'Раздел имущества', 'Другое']
+            fields: [
+                { name: 'type', label: 'Тип вопроса', type: 'select', options: ['Недвижимость', 'Наследство', 'Раздел имущества', 'Другое'] }
+            ]
         },
         labor: {
             question: 'Какой трудовой вопрос?',
-            options: ['Трудовой договор', 'Увольнение', 'Спор с работодателем', 'Другое']
+            fields: [
+                { name: 'type', label: 'Тип вопроса', type: 'select', options: ['Трудовой договор', 'Увольнение', 'Спор с работодателем', 'Другое'] }
+            ]
         },
-        bankruptcy: { question: 'Опишите вашу ситуацию:', textarea: true },
-        other: { question: 'Опишите ваш вопрос:', textarea: true }
+        bankruptcy: {
+            question: 'Опишите вашу ситуацию:',
+            fields: [
+                { name: 'description', label: 'Кратко опишите ситуацию', type: 'textarea', required: false },
+                { name: 'amount', label: 'Общая сумма задолженности', type: 'text', required: false },
+                { name: 'status', label: 'Статус процедуры', type: 'select', options: ['Процедура не начата', 'Процедура уже идёт', 'Не знаю', 'Другое'] }
+            ]
+        },
+        other: {
+            question: 'Опишите ваш вопрос:',
+            fields: [
+                { name: 'description', label: 'Кратко опишите', type: 'textarea', required: false }
+            ]
+        }
     },
 
     contacts: {
@@ -177,21 +256,30 @@ function selectTask(task) {
     if (detail) {
         let html = '<div class="quiz-step active">';
         html += '<h2>' + detail.question + '</h2>';
+        html += '<div class="quiz-form">';
 
-        if (detail.textarea) {
-            html += '<div class="quiz-form">';
-            html += '<textarea id="detail-text" placeholder="Опишите ваш вопрос"></textarea>';
-            html += '<button class="btn btn-primary" onclick="selectDetail()">Далее</button>';
-            html += '</div>';
-        } else {
-            html += '<div class="quiz-buttons">';
-            detail.options.forEach(option => {
-                html += '<button class="quiz-btn" onclick="selectDetail(\'' + option + '\')">' + option + '</button>';
+        if (detail.fields) {
+            detail.fields.forEach(field => {
+                html += '<label>' + field.label + (field.required ? ' *' : '') + '</label>';
+                
+                if (field.type === 'textarea') {
+                    html += '<textarea id="field-' + field.name + '" placeholder="' + field.label + '"></textarea>';
+                } else if (field.type === 'select') {
+                    html += '<select id="field-' + field.name + '">';
+                    html += '<option value="">Выберите...</option>';
+                    field.options.forEach(option => {
+                        html += '<option value="' + option + '">' + option + '</option>';
+                    });
+                    html += '</select>';
+                } else {
+                    html += '<input type="' + field.type + '" id="field-' + field.name + '">';
+                }
             });
-            html += '</div>';
         }
 
-        html += '</div>';
+        html += '<button class="btn btn-primary" onclick="selectDetail()">Далее</button>';
+        html += '</div></div>';
+
         container.innerHTML = html;
         updateProgress(60);
     } else {
@@ -199,14 +287,17 @@ function selectTask(task) {
     }
 }
 
-// Выбор уточнения
-function selectDetail(detail) {
-    if (detail) {
-        answers.detail = detail;
-    } else {
-        const text = document.getElementById('detail-text');
-        if (text) answers.detail = text.value;
-    }
+// Сохранение деталей
+function selectDetail() {
+    const container = document.getElementById('quiz-container');
+    const fields = container.querySelectorAll('input, select, textarea');
+    
+    fields.forEach(field => {
+        if (field.id && field.id !== 'consent') {
+            const key = field.id.replace('field-', '');
+            answers[key] = field.value;
+        }
+    });
 
     showContacts();
     updateProgress(80);
@@ -239,7 +330,7 @@ function showContacts() {
     updateProgress(90);
 }
 
-// Активация кнопки отправки
+// Активация кнопки
 function toggleSubmit() {
     const consent = document.getElementById('consent');
     const submitBtn = document.getElementById('submit-btn');
@@ -270,7 +361,7 @@ function submitQuiz() {
     updateProgress(100);
 }
 
-// Обновление прогресс-бара
+// Прогресс-бар
 function updateProgress(percent) {
     document.getElementById('progress-bar').style.width = percent + '%';
 }
