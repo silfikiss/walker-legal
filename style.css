@@ -610,3 +610,21 @@ input.error, select.error, textarea.error {
 
 /* Убедимся, что кнопка "Назад" всегда отображается, если есть история */
 /* это уже реализовано в JS, дополнительный CSS не нужен */
+/* === Стиль для disabled кнопки === */
+.btn-primary:disabled {
+    background: #a0b8d9;
+    color: #e0e7f0;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+.btn-primary:disabled:hover {
+    background: #a0b8d9;
+    transform: none;
+    box-shadow: none;
+}
+
+/* Дополнительно: небольшая анимация для чекбокса */
+.consent-label input[type="checkbox"] {
+    accent-color: #2a6df4;
+}
