@@ -590,3 +590,66 @@ input.error, select.error, textarea.error {
     align-self: flex-start;
     margin-top: auto;
 }
+/* ===== Единообразие шрифтов ===== */
+body, .header, .nav, .footer, .quiz, .quiz-form input, .quiz-form select, .quiz-form textarea, .btn {
+    font-family: 'Segoe UI', Roboto, Arial, sans-serif;
+}
+.quiz h2 {
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+.quiz-form label {
+    font-size: 1rem;
+    font-weight: 500;
+}
+.quiz-form input, .quiz-form select, .quiz-form textarea {
+    font-size: 1rem;
+}
+.quiz-btn {
+    font-size: 1rem;
+}
+.btn {
+    font-size: 1rem;
+}
+/* Курсив для выделения важных подсказок внутри полей */
+.quiz-form input::placeholder,
+.quiz-form textarea::placeholder {
+    font-style: italic;
+    color: #888;
+}
+/* Если нужно явно выделить что-то курсивом – используем класс .italic */
+.italic {
+    font-style: italic;
+}
+
+/* ===== Прогресс-лейбл ===== */
+.progress-label {
+    text-align: right;
+    font-size: 0.9rem;
+    color: #555;
+    margin-bottom: 6px;
+    font-weight: 500;
+}
+/* Убедимся, что прогресс-бар не пересекается с кнопками */
+.quiz {
+    display: flex;
+    flex-direction: column;
+}
+.quiz .progress {
+    margin-top: 20px;
+    order: 10; /* чтобы прогресс был после формы, но перед кнопками? но кнопки внутри формы, так что порядок не важен */
+}
+/* Но кнопки уже внутри .quiz-form, поэтому прогресс-бар идёт после .quiz-container */
+#quiz-container {
+    flex: 1;
+}
+.progress {
+    margin-top: 25px;
+}
+/* дополнительно отступ снизу для формы, чтобы кнопки не прилипали */
+.quiz-form {
+    margin-bottom: 10px;
+}
+.form-actions {
+    margin-top: 15px;
+}
