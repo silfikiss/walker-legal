@@ -486,7 +486,7 @@
         // Обработчики
         // ------------------------------------------
 
-        bindStepEvents(stepName);
+        bindStepEvents(stepName, data);
 
 
         // ------------------------------------------
@@ -510,7 +510,7 @@
     // СОБЫТИЯ ШАГА
     // ==========================================
 
-    function bindStepEvents(stepName) {
+    function bindStepEvents(stepName, data) {
 
         const container = getContainer();
 
@@ -523,29 +523,30 @@
         // Варианты ответа
         // ------------------------------------------
 
-        container
-            .querySelectorAll('.quiz-btn')
-            .forEach(button => {
+container
+    .querySelectorAll('.quiz-btn')
+    .forEach(button => {
+        button.addEventListener('click', () => {
+            const value = button.dataset.value;
 
-                button.addEventListener(
-                    'click',
-                    () => {
+            selectedOption = value;
 
-                        const step =
-                            button.dataset.step;
+            container
+                .querySelectorAll('.quiz-btn')
+                .forEach(optionButton => {
+                    optionButton.classList.remove('selected');
+                });
 
-                        const value =
-                            button.dataset.value;
+            button.classList.add('selected');
 
-                        handleOptionClick(
-                            step,
-                            value
-                        );
-                    }
-                );
-            });
+            const nextButton =
+                document.getElementById('next-btn');
 
-
+            if (nextButton) {
+                nextButton.disabled = false;
+            }
+        });
+    });
         // ------------------------------------------
         // Кнопки «Назад»
         // ------------------------------------------
@@ -615,29 +616,34 @@
         // Далее / Отправить
         // ------------------------------------------
 
-        const nextButton =
-            document.getElementById('next-btn');
+const nextButton =
+    document.getElementById('next-btn');
 
-        if (!nextButton) {
-            return;
-        }
+if (!nextButton) {
+    return;
+}
 
-        if (stepName === 'contacts') {
+if (stepName === 'contacts') {
 
-            nextButton.addEventListener(
-                'click',
-                submitQuiz
-            );
+    nextButton.addEventListener(
+        'click',
+        submitQuiz
+    );
 
-        } else {
+} else if (Array.isArray(data.options)) {
 
-            nextButton.addEventListener(
-                'click',
-                handleFormNext
-            );
-        }
-    }
+    nextButton.addEventListener(
+        'click',
+        handleOptionNext
+    );
 
+} else {
+
+    nextButton.addEventListener(
+        'click',
+        handleFormNext
+    );
+}
 
     // ==========================================
     // СОХРАНЕНИЕ ПОЛЯ
@@ -893,7 +899,86 @@
             data.contacts
         );
     }
+// ==========================================
+// ПЕРЕХОД ПО КНОПКЕ «ДАЛЕЕ» ДЛЯ ВАРИАНТОВ
+// ==========================================
 
+function handleOptionNext() {
+
+    const data = getQuizData();
+
+    if (!data || selectedOption === null) {
+        return;
+    }
+
+    const value = selectedOption;
+
+    // ------------------------------------------
+    // Кто обращается
+    // ------------------------------------------
+
+    if (currentStepName === 'clientType') {
+
+        clientType = value;
+
+        answers = {
+            clientType: value
+        };
+
+        stepHistory = ['clientType'];
+
+        selectedOption = null;
+
+        const tasks =
+            value === 'business'
+                ? data.businessTasks
+                : data.individualTasks;
+
+        renderStep(
+            'task',
+            tasks
+        );
+
+        return;
+    }
+
+    // ------------------------------------------
+    // Выбор задачи
+    // ------------------------------------------
+
+    if (currentStepName === 'task') {
+
+        const details =
+            clientType === 'business'
+                ? data.businessDetails
+                : data.individualDetails;
+
+        clearPreviousDetailAnswers();
+
+        answers.task = value;
+
+        stepHistory.push('task');
+
+        selectedOption = null;
+
+        const detail = details[value];
+
+        if (detail) {
+
+            renderStep(
+                'details',
+                detail
+            );
+
+        } else {
+
+            renderStep(
+                'contacts',
+                data.contacts
+            );
+        }
+    }
+}
 
     // ==========================================
     // КНОПКА «НАЗАД»
