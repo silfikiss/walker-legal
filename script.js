@@ -5,7 +5,7 @@
     'use strict';
 
     // ==========================================
-    // СОСТОЯНИЕ АНКЕТЫ
+    // СОСТОЯНИЕ
     // ==========================================
 
     let clientType = null;
@@ -13,7 +13,6 @@
     let stepHistory = [];
     let currentStepName = null;
 
-    // Единый источник истины для основных шагов анкеты
     const STEP_ORDER = [
         'clientType',
         'task',
@@ -21,7 +20,6 @@
         'contacts'
     ];
 
-    // Процент заполнения для каждого основного шага
     const STEP_PROGRESS = {
         clientType: 10,
         task: 35,
@@ -30,15 +28,15 @@
         done: 100
     };
 
+
     // ==========================================
-    // ПОЛУЧЕНИЕ ДАННЫХ
+    // ДАННЫЕ
     // ==========================================
 
     function getQuizData() {
         if (!window.quizData) {
             console.error(
-                '[Walker Legal] quizData не загружен. ' +
-                'Проверьте подключение quiz-data.js перед script.js.'
+                '[Walker Legal] quizData не загружен.'
             );
 
             return null;
@@ -46,6 +44,7 @@
 
         return window.quizData;
     }
+
 
     // ==========================================
     // БЕЗОПАСНЫЙ HTML
@@ -64,8 +63,9 @@
             .replace(/'/g, '&#039;');
     }
 
+
     // ==========================================
-    // ПРОВЕРКА СТРУКТУРЫ ДАННЫХ
+    // ПРОВЕРКА ДАННЫХ
     // ==========================================
 
     function validateQuizData(data) {
@@ -95,8 +95,6 @@
             errors.push('Отсутствует contacts');
         }
 
-        // Проверяем соответствие:
-        // task.value → соответствующий блок details
         ['business', 'individual'].forEach(type => {
             const tasks =
                 type === 'business'
@@ -122,7 +120,7 @@
             });
         });
 
-        if (errors.length > 0) {
+        if (errors.length) {
             console.error(
                 '[Walker Legal] Ошибки структуры quizData:',
                 errors
@@ -134,16 +132,54 @@
         return true;
     }
 
+
     // ==========================================
-    // ПОЛУЧЕНИЕ КОНТЕЙНЕРА
+    // КОНТЕЙНЕР
     // ==========================================
 
     function getContainer() {
         return document.getElementById('quiz-container');
     }
 
+
     // ==========================================
-    // РЕНДЕРИНГ ОСНОВНОГО ШАГА
+    // ИСТОРИЯ
+    // ==========================================
+
+    function canGoBack() {
+        return stepHistory.length > 0;
+    }
+
+
+    function rememberStep(stepName) {
+        stepHistory.push(stepName);
+    }
+
+
+    // ==========================================
+    // HTML КНОПКИ «НАЗАД»
+    // ==========================================
+
+    function getBackButtonHtml() {
+        if (!canGoBack()) {
+            return '';
+        }
+
+        return `
+            <div class="form-actions">
+                <button
+                    type="button"
+                    class="btn btn-secondary quiz-back-button"
+                >
+                    ← Назад
+                </button>
+            </div>
+        `;
+    }
+
+
+    // ==========================================
+    // РЕНДЕРИНГ ШАГА
     // ==========================================
 
     function renderStep(stepName, data) {
@@ -153,6 +189,7 @@
             console.error(
                 '[Walker Legal] Не найден #quiz-container'
             );
+
             return;
         }
 
@@ -160,81 +197,93 @@
             console.error(
                 `[Walker Legal] Нет данных для шага "${stepName}"`
             );
+
             return;
         }
 
         currentStepName = stepName;
 
         const stepDiv = document.createElement('div');
+
         stepDiv.className = 'quiz-step';
 
         let html = '';
+
 
         // ------------------------------------------
         // Заголовок
         // ------------------------------------------
 
         if (data.question) {
-            html += `<h2>${escapeHtml(data.question)}</h2>`;
+            html += `
+                <h2>
+                    ${escapeHtml(data.question)}
+                </h2>
+            `;
         }
+
 
         // ------------------------------------------
         // Варианты ответа
         // ------------------------------------------
 
-      if (Array.isArray(data.options)) {
-    html += '<div class="quiz-buttons">';
+        if (Array.isArray(data.options)) {
 
-    data.options.forEach(option => {
-        let buttonClass = 'quiz-btn';
+            html += `
+                <div class="quiz-buttons">
+            `;
 
-        if (option.isPackage) {
-            buttonClass += ' package-btn';
+            data.options.forEach(option => {
+
+                let buttonClass = 'quiz-btn';
+
+                if (option.isPackage) {
+                    buttonClass += ' package-btn';
+                }
+
+                html += `
+                    <button
+                        type="button"
+                        class="${buttonClass}"
+                        data-step="${escapeHtml(stepName)}"
+                        data-value="${escapeHtml(option.value)}"
+                    >
+                        ${escapeHtml(option.label)}
+                    </button>
+                `;
+            });
+
+            html += '</div>';
+
+            // Кнопка назад находится ОДИН РАЗ
+            html += getBackButtonHtml();
         }
 
-        html += `
-            <button
-                type="button"
-                class="${buttonClass}"
-                data-step="${escapeHtml(stepName)}"
-                data-value="${escapeHtml(option.value)}"
-            >
-                ${escapeHtml(option.label)}
-            </button>
-        `;
-    });
-
-    html += '</div>';
-
-    // Кнопка «Назад» для шагов с вариантами ответа
-    if (canGoBack()) {
-        html += `
-            <div class="form-actions">
-                <button
-                    type="button"
-                    class="btn btn-secondary"
-                    id="back-btn"
-                >
-                    ← Назад
-                </button>
-            </div>
-        `;
-    }
-}
 
         // ------------------------------------------
         // Поля формы
         // ------------------------------------------
 
         if (Array.isArray(data.fields)) {
-            html += '<div class="quiz-form">';
+
+            html += `
+                <div class="quiz-form">
+            `;
 
             data.fields.forEach(field => {
-                const fieldId = `field-${field.name}`;
-                const requiredAttr = field.required ? ' required' : '';
-                const requiredMark = field.required
-                    ? ' <span class="required-star">*</span>'
-                    : '';
+
+                const fieldId =
+                    `field-${field.name}`;
+
+                const requiredAttr =
+                    field.required
+                        ? ' required'
+                        : '';
+
+                const requiredMark =
+                    field.required
+                        ? ' <span class="required-star">*</span>'
+                        : '';
 
                 const savedValue =
                     answers[field.name] !== undefined
@@ -244,16 +293,21 @@
                 const placeholder =
                     field.placeholder || field.label;
 
+
                 html += `
                     <div class="quiz-field">
+
                         <label for="${escapeHtml(fieldId)}">
                             ${escapeHtml(field.label)}
                             ${requiredMark}
                         </label>
                 `;
 
+
                 // TEXTAREA
+
                 if (field.type === 'textarea') {
+
                     html += `
                         <textarea
                             id="${escapeHtml(fieldId)}"
@@ -264,23 +318,30 @@
                     `;
                 }
 
+
                 // SELECT
+
                 else if (field.type === 'select') {
+
                     html += `
                         <select
                             id="${escapeHtml(fieldId)}"
                             name="${escapeHtml(field.name)}"
                             ${requiredAttr}
                         >
-                            <option value="" disabled ${
-                                !savedValue ? 'selected' : ''
-                            }>
+                            <option
+                                value=""
+                                disabled
+                                ${!savedValue ? 'selected' : ''}
+                            >
                                 Выберите вариант
                             </option>
                     `;
 
                     if (Array.isArray(field.options)) {
+
                         field.options.forEach(option => {
+
                             html += `
                                 <option
                                     value="${escapeHtml(option)}"
@@ -299,8 +360,11 @@
                     html += '</select>';
                 }
 
+
                 // INPUT
+
                 else {
+
                     html += `
                         <input
                             type="${escapeHtml(field.type || 'text')}"
@@ -313,32 +377,41 @@
                     `;
                 }
 
-                html += '</div>';
+                html += `
+                    </div>
+                `;
             });
 
+
             // --------------------------------------
-            // Согласие на обработку данных
+            // Согласие
             // --------------------------------------
 
             if (stepName === 'contacts') {
+
                 html += `
                     <label class="consent-label">
+
                         <input
                             type="checkbox"
                             id="consent"
                         >
+
                         <span>
                             Согласен на обработку персональных данных
                         </span>
+
                     </label>
                 `;
             }
 
+
             // --------------------------------------
-            // Кнопки
+            // Кнопки формы
             // --------------------------------------
 
-            const isContacts = stepName === 'contacts';
+            const isContacts =
+                stepName === 'contacts';
 
             html += `
                 <div class="form-actions">
@@ -348,8 +421,7 @@
                 html += `
                     <button
                         type="button"
-                        class="btn btn-secondary"
-                        id="back-btn"
+                        class="btn btn-secondary quiz-back-button"
                     >
                         ← Назад
                     </button>
@@ -365,26 +437,33 @@
                     >
                         ${isContacts ? 'Отправить' : 'Далее'}
                     </button>
+
                 </div>
             `;
 
-            html += '</div>';
+            html += `
+                </div>
+            `;
         }
 
+
         // ------------------------------------------
-        // Вставляем HTML
+        // Вставка HTML
         // ------------------------------------------
 
         stepDiv.innerHTML = html;
 
         container.innerHTML = '';
+
         container.appendChild(stepDiv);
 
+
         // ------------------------------------------
-        // Подключаем обработчики
+        // Обработчики
         // ------------------------------------------
 
         bindStepEvents(stepName);
+
 
         // ------------------------------------------
         // Анимация
@@ -394,6 +473,7 @@
             stepDiv.classList.add('active');
         });
 
+
         // ------------------------------------------
         // Прогресс
         // ------------------------------------------
@@ -401,90 +481,146 @@
         updateProgress(stepName);
     }
 
+
     // ==========================================
-    // СОБЫТИЯ ТЕКУЩЕГО ШАГА
+    // СОБЫТИЯ ШАГА
     // ==========================================
 
     function bindStepEvents(stepName) {
+
         const container = getContainer();
 
         if (!container) {
             return;
         }
 
+
         // ------------------------------------------
-        // Кнопки вариантов
+        // Варианты ответа
         // ------------------------------------------
 
         container
             .querySelectorAll('.quiz-btn')
             .forEach(button => {
-                button.addEventListener('click', () => {
-                    const step = button.dataset.step;
-                    const value = button.dataset.value;
 
-                    handleOptionClick(step, value);
-                });
+                button.addEventListener(
+                    'click',
+                    () => {
+
+                        const step =
+                            button.dataset.step;
+
+                        const value =
+                            button.dataset.value;
+
+                        handleOptionClick(
+                            step,
+                            value
+                        );
+                    }
+                );
             });
+
+
+        // ------------------------------------------
+        // Кнопки «Назад»
+        // ------------------------------------------
+
+        container
+            .querySelectorAll('.quiz-back-button')
+            .forEach(button => {
+
+                button.addEventListener(
+                    'click',
+                    goBack
+                );
+            });
+
 
         // ------------------------------------------
         // Поля
         // ------------------------------------------
 
         container
-            .querySelectorAll('input, select, textarea')
+            .querySelectorAll(
+                'input, select, textarea'
+            )
             .forEach(field => {
-                field.addEventListener('input', () => {
-                    field.classList.remove('error');
 
-                    saveCurrentField(field);
-                });
+                field.addEventListener(
+                    'input',
+                    () => {
 
-                field.addEventListener('change', () => {
-                    field.classList.remove('error');
+                        field.classList.remove(
+                            'error'
+                        );
 
-                    saveCurrentField(field);
-
-                    if (field.id === 'consent') {
-                        toggleSubmit();
+                        saveCurrentField(field);
                     }
-                });
+                );
 
-                field.addEventListener('blur', () => {
-                    validateField(field);
-                });
+
+                field.addEventListener(
+                    'change',
+                    () => {
+
+                        field.classList.remove(
+                            'error'
+                        );
+
+                        saveCurrentField(field);
+
+                        if (field.id === 'consent') {
+                            toggleSubmit();
+                        }
+                    }
+                );
+
+
+                field.addEventListener(
+                    'blur',
+                    () => {
+
+                        validateField(field);
+                    }
+                );
             });
 
-        // ------------------------------------------
-        // Назад
-        // ------------------------------------------
-
-        const backButton = document.getElementById('back-btn');
-
-        if (backButton) {
-            backButton.addEventListener('click', goBack);
-        }
 
         // ------------------------------------------
         // Далее / Отправить
         // ------------------------------------------
 
-        const nextButton = document.getElementById('next-btn');
+        const nextButton =
+            document.getElementById('next-btn');
 
-        if (nextButton) {
-            if (stepName === 'contacts') {
-                nextButton.addEventListener('click', submitQuiz);
-            } else {
-                nextButton.addEventListener('click', handleFormNext);
-            }
+        if (!nextButton) {
+            return;
+        }
+
+        if (stepName === 'contacts') {
+
+            nextButton.addEventListener(
+                'click',
+                submitQuiz
+            );
+
+        } else {
+
+            nextButton.addEventListener(
+                'click',
+                handleFormNext
+            );
         }
     }
+
 
     // ==========================================
     // СОХРАНЕНИЕ ПОЛЯ
     // ==========================================
 
     function saveCurrentField(field) {
+
         if (!field || !field.id) {
             return;
         }
@@ -497,37 +633,48 @@
             return;
         }
 
-        const key = field.id.replace('field-', '');
+        const key =
+            field.id.replace('field-', '');
 
         answers[key] = field.value;
     }
 
+
     // ==========================================
-    // ВАЛИДАЦИЯ ОДНОГО ПОЛЯ
+    // ВАЛИДАЦИЯ ПОЛЯ
     // ==========================================
 
     function validateField(field) {
+
         if (!field.hasAttribute('required')) {
+
             field.classList.remove('error');
+
             return true;
         }
 
-        const value = String(field.value || '').trim();
+        const value =
+            String(field.value || '').trim();
 
         if (!value) {
+
             field.classList.add('error');
+
             return false;
         }
 
         field.classList.remove('error');
+
         return true;
     }
 
+
     // ==========================================
-    // ВАЛИДАЦИЯ ВСЕХ ПОЛЕЙ
+    // ВАЛИДАЦИЯ ФОРМЫ
     // ==========================================
 
     function validateCurrentForm() {
+
         const container = getContainer();
 
         if (!container) {
@@ -537,8 +684,11 @@
         let isValid = true;
 
         container
-            .querySelectorAll('input, select, textarea')
+            .querySelectorAll(
+                'input, select, textarea'
+            )
             .forEach(field => {
+
                 if (field.id === 'consent') {
                     return;
                 }
@@ -553,86 +703,121 @@
         return isValid;
     }
 
+
     // ==========================================
     // ВЫБОР ВАРИАНТА
     // ==========================================
 
     function handleOptionClick(stepName, value) {
+
         const data = getQuizData();
 
         if (!data) {
             return;
         }
 
+
         // ------------------------------------------
-        // Выбор: физлицо / бизнес
+        // Кто обращается
         // ------------------------------------------
 
         if (stepName === 'clientType') {
+
             clientType = value;
 
             answers = {
                 clientType: value
             };
 
-            stepHistory = ['clientType'];
+            // В историю записываем шаг,
+            // с которого пришли.
+            stepHistory = [
+                'clientType'
+            ];
 
             const tasks =
                 value === 'business'
                     ? data.businessTasks
                     : data.individualTasks;
 
-            renderStep('task', tasks);
+            renderStep(
+                'task',
+                tasks
+            );
 
             return;
         }
+
 
         // ------------------------------------------
         // Выбор задачи
         // ------------------------------------------
 
         if (stepName === 'task') {
+
             const details =
                 clientType === 'business'
                     ? data.businessDetails
                     : data.individualDetails;
 
-            // Если пользователь вернулся назад
-            // и выбрал другую задачу — удаляем старые
-            // ответы предыдущей ветки.
+
+            // Удаляем ответы старой ветки
             clearPreviousDetailAnswers();
+
 
             answers.task = value;
 
+
+            // В историю записываем task
             stepHistory.push('task');
 
-            const detail = details[value];
+
+            const detail =
+                details[value];
+
 
             if (detail) {
-                renderStep('details', detail);
+
+                renderStep(
+                    'details',
+                    detail
+                );
+
             } else {
+
                 console.warn(
                     `[Walker Legal] Для задачи "${value}" ` +
                     'нет блока уточняющих вопросов.'
                 );
 
-                stepHistory.push('details');
+                stepHistory.push(
+                    'details'
+                );
 
-                renderStep('contacts', data.contacts);
+                renderStep(
+                    'contacts',
+                    data.contacts
+                );
             }
 
             return;
         }
     }
 
+
     // ==========================================
     // ОЧИСТКА СТАРЫХ ОТВЕТОВ
     // ==========================================
 
     function clearPreviousDetailAnswers() {
+
         const data = getQuizData();
 
-        if (!data || !answers.task || !clientType) {
+        if (
+            !data ||
+            !answers.task ||
+            !clientType
+        ) {
             return;
         }
 
@@ -641,22 +826,30 @@
                 ? data.businessDetails
                 : data.individualDetails;
 
-        const previousDetail = details[answers.task];
+        const previousDetail =
+            details[answers.task];
 
-        if (!previousDetail || !Array.isArray(previousDetail.fields)) {
+        if (
+            !previousDetail ||
+            !Array.isArray(previousDetail.fields)
+        ) {
             return;
         }
 
-        previousDetail.fields.forEach(field => {
-            delete answers[field.name];
-        });
+        previousDetail.fields.forEach(
+            field => {
+                delete answers[field.name];
+            }
+        );
     }
+
 
     // ==========================================
     // КНОПКА «ДАЛЕЕ»
     // ==========================================
 
     function handleFormNext() {
+
         if (!validateCurrentForm()) {
             return;
         }
@@ -667,33 +860,45 @@
             return;
         }
 
-        stepHistory.push('details');
+        stepHistory.push(
+            'details'
+        );
 
-        renderStep('contacts', data.contacts);
+        renderStep(
+            'contacts',
+            data.contacts
+        );
     }
 
-    // ==========================================
-    // МОЖНО ЛИ ВЕРНУТЬСЯ НАЗАД
-    // ==========================================
-
-    function canGoBack() {
-        return stepHistory.length > 0;
-    }
 
     // ==========================================
     // КНОПКА «НАЗАД»
     // ==========================================
 
     function goBack() {
+
         const data = getQuizData();
 
-        if (!data || stepHistory.length === 0) {
+        if (
+            !data ||
+            stepHistory.length === 0
+        ) {
             return;
         }
 
-        const previousStep = stepHistory.pop();
 
-        if (previousStep === 'clientType') {
+        const previousStep =
+            stepHistory.pop();
+
+
+        // ------------------------------------------
+        // Возвращаемся к «Кто обращается?»
+        // ------------------------------------------
+
+        if (
+            previousStep === 'clientType'
+        ) {
+
             clientType = null;
 
             answers = {};
@@ -706,98 +911,159 @@
             return;
         }
 
-        if (previousStep === 'task') {
+
+        // ------------------------------------------
+        // Возвращаемся к выбору задачи
+        // ------------------------------------------
+
+        if (
+            previousStep === 'task'
+        ) {
+
             const tasks =
                 clientType === 'business'
                     ? data.businessTasks
                     : data.individualTasks;
 
-            renderStep('task', tasks);
+            renderStep(
+                'task',
+                tasks
+            );
 
             return;
         }
 
-        if (previousStep === 'details') {
+
+        // ------------------------------------------
+        // Возвращаемся к деталям
+        // ------------------------------------------
+
+        if (
+            previousStep === 'details'
+        ) {
+
             const details =
                 clientType === 'business'
                     ? data.businessDetails
                     : data.individualDetails;
 
-            const detail = details[answers.task];
+            const detail =
+                details[answers.task];
 
             if (detail) {
-                renderStep('details', detail);
+
+                renderStep(
+                    'details',
+                    detail
+                );
+
             } else {
+
                 goBack();
             }
         }
     }
+
 
     // ==========================================
     // СОГЛАСИЕ
     // ==========================================
 
     function toggleSubmit() {
-        const consent = document.getElementById('consent');
-        const button = document.getElementById('next-btn');
+
+        const consent =
+            document.getElementById(
+                'consent'
+            );
+
+        const button =
+            document.getElementById(
+                'next-btn'
+            );
 
         if (!consent || !button) {
             return;
         }
 
-        button.disabled = !consent.checked;
+        button.disabled =
+            !consent.checked;
     }
 
+
     // ==========================================
-    // ОТПРАВКА АНКЕТЫ
+    // ОТПРАВКА
     // ==========================================
 
     function submitQuiz() {
+
         if (!validateCurrentForm()) {
             return;
         }
 
-        const consent = document.getElementById('consent');
+        const consent =
+            document.getElementById(
+                'consent'
+            );
 
-        if (!consent || !consent.checked) {
+
+        if (
+            !consent ||
+            !consent.checked
+        ) {
+
             if (consent) {
-                consent.classList.add('error');
+                consent.classList.add(
+                    'error'
+                );
             }
 
             return;
         }
 
+
         console.log(
             '[Walker Legal] Анкета отправлена:',
-            JSON.stringify(answers, null, 2)
+            JSON.stringify(
+                answers,
+                null,
+                2
+            )
         );
+
 
         showSuccessScreen();
     }
+
 
     // ==========================================
     // ФИНАЛЬНЫЙ ЭКРАН
     // ==========================================
 
     function showSuccessScreen() {
-        const container = getContainer();
+
+        const container =
+            getContainer();
 
         if (!container) {
             return;
         }
 
-        const stepDiv = document.createElement('div');
+        const stepDiv =
+            document.createElement(
+                'div'
+            );
 
-        stepDiv.className = 'quiz-step active';
+        stepDiv.className =
+            'quiz-step active';
 
         stepDiv.innerHTML = `
             <h2>Спасибо!</h2>
 
             <p>
-                Запрос получен. Мы изучим ответы и свяжемся с вами,
-                чтобы уточнить задачу и предложить подходящий формат работы.
-                Подробные обстоятельства и документы можно будет обсудить
-                на первом звонке.
+                Запрос получен. Мы изучим ответы
+                и свяжемся с вами, чтобы уточнить
+                задачу и предложить подходящий
+                формат работы.
             </p>
 
             <button
@@ -810,12 +1076,19 @@
         `;
 
         container.innerHTML = '';
-        container.appendChild(stepDiv);
+
+        container.appendChild(
+            stepDiv
+        );
+
 
         const restartButton =
-            document.getElementById('restart-quiz-btn');
+            document.getElementById(
+                'restart-quiz-btn'
+            );
 
         if (restartButton) {
+
             restartButton.addEventListener(
                 'click',
                 resetQuiz
@@ -825,17 +1098,24 @@
         updateProgress('done');
     }
 
+
     // ==========================================
-    // СБРОС АНКЕТЫ
+    // СБРОС
     // ==========================================
 
     function resetQuiz() {
+
         clientType = null;
+
         answers = {};
+
         stepHistory = [];
+
         currentStepName = null;
 
-        const data = getQuizData();
+
+        const data =
+            getQuizData();
 
         if (!data) {
             return;
@@ -847,37 +1127,55 @@
         );
     }
 
+
     // ==========================================
-    // ПРОГРЕСС-БАР
+    // ПРОГРЕСС
     // ==========================================
 
     function updateProgress(stepName) {
+
         const bar =
-            document.getElementById('progress-bar');
+            document.getElementById(
+                'progress-bar'
+            );
 
         if (!bar) {
             return;
         }
+
 
         const percent =
             STEP_PROGRESS[stepName] !== undefined
                 ? STEP_PROGRESS[stepName]
                 : 0;
 
-        bar.style.width = `${percent}%`;
+        bar.style.width =
+            `${percent}%`;
 
-        // Создаем подпись, если её нет
+
         let label =
-            document.getElementById('progress-label');
+            document.getElementById(
+                'progress-label'
+            );
 
         const progress =
-            document.querySelector('.progress');
+            document.querySelector(
+                '.progress'
+            );
+
 
         if (!label && progress) {
-            label = document.createElement('div');
 
-            label.id = 'progress-label';
-            label.className = 'progress-label';
+            label =
+                document.createElement(
+                    'div'
+                );
+
+            label.id =
+                'progress-label';
+
+            label.className =
+                'progress-label';
 
             progress.parentNode.insertBefore(
                 label,
@@ -885,56 +1183,88 @@
             );
         }
 
+
         if (!label) {
             return;
         }
 
+
         if (stepName === 'done') {
-            label.textContent = 'Готово!';
+
+            label.textContent =
+                'Готово!';
+
             return;
         }
+
 
         const stepIndex =
-            STEP_ORDER.indexOf(stepName);
+            STEP_ORDER.indexOf(
+                stepName
+            );
+
 
         if (stepIndex === -1) {
+
             label.textContent = '';
+
             return;
         }
+
 
         label.textContent =
             `Шаг ${stepIndex + 1} из ${STEP_ORDER.length}`;
     }
+
 
     // ==========================================
     // ИНИЦИАЛИЗАЦИЯ
     // ==========================================
 
     function initQuiz() {
-        const data = getQuizData();
+
+        const data =
+            getQuizData();
 
         if (!data) {
             return;
         }
 
+
         if (!validateQuizData(data)) {
+
             console.error(
-                '[Walker Legal] Анкета содержит ошибки в данных.'
+                '[Walker Legal] Анкета содержит ошибки.'
             );
         }
 
+
         const progress =
-            document.querySelector('.progress');
+            document.querySelector(
+                '.progress'
+            );
+
 
         if (progress) {
+
             let label =
-                document.getElementById('progress-label');
+                document.getElementById(
+                    'progress-label'
+                );
+
 
             if (!label) {
-                label = document.createElement('div');
 
-                label.id = 'progress-label';
-                label.className = 'progress-label';
+                label =
+                    document.createElement(
+                        'div'
+                    );
+
+                label.id =
+                    'progress-label';
+
+                label.className =
+                    'progress-label';
 
                 progress.parentNode.insertBefore(
                     label,
@@ -943,22 +1273,29 @@
             }
         }
 
+
         renderStep(
             'clientType',
             data.clientType
         );
     }
 
+
     // ==========================================
     // ЗАПУСК
     // ==========================================
 
-    if (document.readyState === 'loading') {
+    if (
+        document.readyState === 'loading'
+    ) {
+
         document.addEventListener(
             'DOMContentLoaded',
             initQuiz
         );
+
     } else {
+
         initQuiz();
     }
 
