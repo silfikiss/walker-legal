@@ -2,8 +2,11 @@
 
 let clientType = null;
 let answers = {};
-let stepHistory = []; // стек пройденных шагов
+let stepHistory = [];
 let currentStepName = null;
+
+// Порядок шагов для индикатора
+const STEP_ORDER = ['clientType', 'task', 'details', 'contacts'];
 
 const quizData = {
     clientType: {
@@ -339,11 +342,11 @@ function renderStep(stepName, data) {
     const stepDiv = document.createElement('div');
     stepDiv.className = 'quiz-step active';
 
-    // Определяем общее количество шагов (для индикатора)
-    const stepOrder = ['clientType', 'task', 'details', 'contacts'];
-    const currentIndex = stepOrder.indexOf(stepName);
-    const totalSteps = stepOrder.length;
-    const stepNumber = currentIndex + 1;
+    // Определяем номер шага для индикатора (только если шаг в списке)
+    const stepIndex = STEP_ORDER.indexOf(stepName);
+    const showProgress = stepIndex !== -1;
+    let stepNumber = showProgress ? stepIndex + 1 : 0;
+    let totalSteps = STEP_ORDER.length;
 
     let html = `<h2>${data.question}</h2>`;
 
@@ -358,7 +361,6 @@ function renderStep(stepName, data) {
     } else if (data.fields) {
         html += '<div class="quiz-form">';
         data.fields.forEach(field => {
-            const required = field.required ? ' required' : '';
             const requiredAttr = field.required ? ' required' : '';
             html += `<label>${field.label}${field.required ? ' <span class="required-star">*</span>' : ''}</label>`;
             if (field.type === 'textarea') {
@@ -384,7 +386,7 @@ function renderStep(stepName, data) {
         const btnLabel = (stepName === 'contacts') ? 'Отправить' : 'Далее';
         const onClick = (stepName === 'contacts') ? 'submitQuiz()' : 'handleFormNext()';
         html += `<div class="form-actions">`;
-        // Кнопка "Назад" (если не первый шаг)
+        // Кнопка "Назад" (если есть история)
         if (stepHistory.length > 0) {
             html += `<button type="button" class="btn btn-secondary" onclick="goBack()">← Назад</button>`;
         }
@@ -396,7 +398,13 @@ function renderStep(stepName, data) {
     stepDiv.innerHTML = html;
     container.innerHTML = '';
     container.appendChild(stepDiv);
-    updateProgress(stepName, stepNumber, totalSteps);
+    // Обновляем прогресс только если это известный шаг
+    if (showProgress) {
+        updateProgress(stepName, stepNumber, totalSteps);
+    } else {
+        // Для 'done' или неизвестного шага — показываем финальный
+        updateProgress(stepName);
+    }
 }
 
 // ===== Обработка выбора варианта =====
@@ -417,7 +425,6 @@ function handleOptionClick(stepName, value) {
         if (detail) {
             renderStep('details', detail);
         } else {
-            // если нет деталей, сразу контакты
             currentStepName = 'contacts';
             renderStep('contacts', quizData.contacts);
         }
@@ -443,7 +450,6 @@ function handleFormNext() {
         }
     });
     if (!isValid) {
-        // Показать сообщение или просто подсветить
         return;
     }
     stepHistory.push('details');
@@ -460,24 +466,20 @@ function goBack() {
         currentStepName = 'clientType';
         renderStep('clientType', quizData.clientType);
     } else if (prevStep === 'task') {
-        // нужно восстановить список задач (зависит от clientType)
         const tasks = clientType === 'business' ? quizData.businessTasks : quizData.individualTasks;
         currentStepName = 'task';
         renderStep('task', tasks);
     } else if (prevStep === 'details') {
-        // нужно восстановить детали (зависит от выбранной задачи)
         const details = clientType === 'business' ? quizData.businessDetails : quizData.individualDetails;
         const detail = details[answers.task];
         if (detail) {
             currentStepName = 'details';
             renderStep('details', detail);
         } else {
-            // fallback
+            // fallback — переход на контакты (не должно случиться)
             goBack();
         }
     }
-    // Если предыдущий шаг был контакты – обрабатываем отдельно
-    // но мы не храним контакты в истории (потому что это последний шаг)
 }
 
 // ===== Активация кнопки отправки =====
@@ -508,9 +510,9 @@ function submitQuiz() {
     const consent = document.getElementById('consent');
     if (!consent || !consent.checked) {
         isValid = false;
-        consent.classList.add('error');
+        if (consent) consent.classList.add('error');
     } else {
-        consent.classList.remove('error');
+        if (consent) consent.classList.remove('error');
     }
     if (!isValid) {
         return;
@@ -545,8 +547,10 @@ function updateProgress(stepName, stepNumber, totalSteps) {
     if (label) {
         if (stepName === 'done') {
             label.textContent = 'Готово!';
-        } else {
+        } else if (stepNumber !== undefined && totalSteps !== undefined) {
             label.textContent = `Шаг ${stepNumber} из ${totalSteps}`;
+        } else {
+            label.textContent = '';
         }
     }
 }
@@ -556,13 +560,15 @@ document.addEventListener('DOMContentLoaded', function() {
     // Создаём прогресс-лейбл, если его нет
     const progressContainer = document.querySelector('.progress');
     if (progressContainer) {
-        const label = document.createElement('div');
-        label.id = 'progress-label';
-        label.className = 'progress-label';
-        progressContainer.parentNode.insertBefore(label, progressContainer);
+        let label = document.getElementById('progress-label');
+        if (!label) {
+            label = document.createElement('div');
+            label.id = 'progress-label';
+            label.className = 'progress-label';
+            progressContainer.parentNode.insertBefore(label, progressContainer);
+        }
     }
     renderStep('clientType', quizData.clientType);
     currentStepName = 'clientType';
-    // Обновляем прогресс для первого шага
-    updateProgress('clientType', 1, 4);
+    updateProgress('clientType', 1, STEP_ORDER.length);
 });
