@@ -1,5 +1,5 @@
 // ===== script.js =====
-// Основная логика анкеты (без данных)
+// Основная логика анкеты (данные в quiz-data.js)
 
 let clientType = null;
 let answers = {};
@@ -12,7 +12,7 @@ const STEP_ORDER = ['clientType', 'task', 'details', 'contacts'];
 function renderStep(stepName, data) {
     const container = document.getElementById('quiz-container');
     const stepDiv = document.createElement('div');
-    stepDiv.className = 'quiz-step active';
+    stepDiv.className = 'quiz-step'; // без active
 
     const stepIndex = STEP_ORDER.indexOf(stepName);
     const showProgress = stepIndex !== -1;
@@ -53,11 +53,9 @@ function renderStep(stepName, data) {
                         Согласен на обработку персональных данных
                     </label>`;
         }
-        // Кнопки управления
         const btnLabel = (stepName === 'contacts') ? 'Отправить' : 'Далее';
         const onClick = (stepName === 'contacts') ? 'submitQuiz()' : 'handleFormNext()';
         html += `<div class="form-actions">`;
-        // Кнопка "Назад" — показываем, если есть история или если это не первый шаг
         if (stepHistory.length > 0) {
             html += `<button type="button" class="btn btn-secondary" onclick="goBack()">← Назад</button>`;
         }
@@ -70,14 +68,15 @@ function renderStep(stepName, data) {
     container.innerHTML = '';
     container.appendChild(stepDiv);
 
-    // Добавляем обработчики для снятия подсветки ошибок при вводе
+    // Обработчики для снятия подсветки ошибок
     container.querySelectorAll('input, select, textarea').forEach(el => {
-        el.addEventListener('input', function() {
-            this.classList.remove('error');
-        });
-        el.addEventListener('change', function() {
-            this.classList.remove('error');
-        });
+        el.addEventListener('input', function() { this.classList.remove('error'); });
+        el.addEventListener('change', function() { this.classList.remove('error'); });
+    });
+
+    // Плавное появление (через requestAnimationFrame, чтобы браузер успел отрендерить)
+    requestAnimationFrame(() => {
+        stepDiv.classList.add('active');
     });
 
     if (showProgress) {
@@ -162,7 +161,6 @@ function goBack() {
             currentStepName = 'details';
             renderStep('details', detail);
         } else {
-            // fallback
             goBack();
         }
     }
@@ -205,7 +203,7 @@ function submitQuiz() {
 
     console.log('Анкета отправлена:', answers);
 
-    // Показываем финальный экран с кнопкой "Заполнить заново"
+    // Финальный экран с кнопкой "Заполнить заново"
     const stepDiv = document.createElement('div');
     stepDiv.className = 'quiz-step active';
     stepDiv.innerHTML = `
@@ -218,7 +216,7 @@ function submitQuiz() {
     updateProgress('done');
 }
 
-// ===== Прогресс-бар и индикатор =====
+// ===== Прогресс-бар =====
 function updateProgress(stepName, stepNumber, totalSteps) {
     const bar = document.getElementById('progress-bar');
     const label = document.getElementById('progress-label');
