@@ -27,12 +27,8 @@
             <h1>Наши услуги</h1>
             <p class="subtitle">Выберите, кто обращается, и мы зададим несколько уточняющих вопросов.</p>
 
-            <!-- Анкета -->
             <div id="quiz" class="quiz">
-                <!-- Контейнер для всех шагов (генерируется скриптом) -->
                 <div id="quiz-container"></div>
-
-                <!-- Прогресс-бар -->
                 <div class="progress">
                     <div id="progress-bar" class="progress-bar"></div>
                 </div>
@@ -51,7 +47,12 @@
         </div>
     </footer>
 
-    <script src="quiz-data.js"></script>
-    <script src="script.js"></script>
+    <script>
+        (function() {
+            var time = new Date().getTime();
+            document.write('<script src="quiz-data.js?v=' + time + '"><\/script>');
+            document.write('<script src="script.js?v=' + time + '"><\/script>');
+        })();
+    </script>
 </body>
 </html>
