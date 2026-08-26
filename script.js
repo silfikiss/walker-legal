@@ -616,35 +616,35 @@ container
         // Далее / Отправить
         // ------------------------------------------
 
-const nextButton =
-    document.getElementById('next-btn');
-
-if (!nextButton) {
-    return;
-}
-
-if (stepName === 'contacts') {
-
-    nextButton.addEventListener(
-        'click',
-        submitQuiz
-    );
-
-} else if (Array.isArray(data.options)) {
-
-    nextButton.addEventListener(
-        'click',
-        handleOptionNext
-    );
-
-} else {
-
-    nextButton.addEventListener(
-        'click',
-        handleFormNext
-    );
-}
-
+        const nextButton =
+            document.getElementById('next-btn');
+        
+        if (!nextButton) {
+            return;
+        }
+        
+        if (stepName === 'contacts') {
+        
+            nextButton.addEventListener(
+                'click',
+                submitQuiz
+            );
+        
+        } else if (Array.isArray(data.options)) {
+        
+            nextButton.addEventListener(
+                'click',
+                handleOptionNext
+            );
+        
+        } else {
+        
+            nextButton.addEventListener(
+                'click',
+                handleFormNext
+            );
+        }
+    }
     // ==========================================
     // СОХРАНЕНИЕ ПОЛЯ
     // ==========================================
