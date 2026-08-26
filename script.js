@@ -1,11 +1,10 @@
-// ===== Логика анкеты Walker Legal (обновлённая) =====
+// ===== Логика анкеты Walker Legal (исправленная) =====
 
 let clientType = null;
 let answers = {};
 let stepHistory = [];
 let currentStepName = null;
 
-// Порядок шагов для индикатора
 const STEP_ORDER = ['clientType', 'task', 'details', 'contacts'];
 
 const quizData = {
@@ -16,7 +15,6 @@ const quizData = {
             { value: 'individual', label: 'Я обращаюсь лично' }
         ]
     },
-
     businessTasks: {
         question: 'Выберите основную задачу',
         options: [
@@ -37,7 +35,6 @@ const quizData = {
             { value: 'multiple', label: 'Несколько задач / не знаю, что выбрать' }
         ]
     },
-
     businessDetails: {
         consultation: {
             question: 'Уточните, пожалуйста:',
@@ -525,10 +522,26 @@ function submitQuiz() {
     stepDiv.innerHTML = `
         <h2>Спасибо!</h2>
         <p>Запрос получен. Мы изучим ответы и свяжемся с вами, чтобы уточнить задачу и предложить подходящий формат работы. Подробные обстоятельства и документы можно будет обсудить на первом звонке.</p>
+        <div class="form-actions" style="justify-content:center; margin-top:20px;">
+            <button class="btn btn-primary" onclick="resetQuiz()">Вернуться к началу</button>
+        </div>
     `;
     container.innerHTML = '';
     container.appendChild(stepDiv);
     updateProgress('done');
+}
+
+// ===== Сброс анкеты (возврат на первый шаг) =====
+function resetQuiz() {
+    // Сброс всех переменных
+    clientType = null;
+    answers = {};
+    stepHistory = [];
+    currentStepName = null;
+    // Перерисовываем первый шаг
+    renderStep('clientType', quizData.clientType);
+    currentStepName = 'clientType';
+    updateProgress('clientType', 1, STEP_ORDER.length);
 }
 
 // ===== Прогресс-бар и индикатор =====
