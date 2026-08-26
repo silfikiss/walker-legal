@@ -109,6 +109,7 @@ function handleOptionClick(stepName, value) {
         clientType = value;
         answers.clientType = value;
         const tasks = value === 'business' ? data.businessTasks : data.individualTasks;
+        // Добавляем в историю, чтобы на шаге task появилась кнопка "Назад"
         stepHistory.push('clientType');
         currentStepName = 'task';
         renderStep('task', tasks);
@@ -116,6 +117,7 @@ function handleOptionClick(stepName, value) {
         answers.task = value;
         const details = clientType === 'business' ? data.businessDetails : data.individualDetails;
         const detail = details[value];
+        // Добавляем в историю для кнопки "Назад" на шаге details
         stepHistory.push('task');
         currentStepName = 'details';
         if (detail) {
