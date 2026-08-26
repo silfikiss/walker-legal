@@ -12,6 +12,7 @@
     let answers = {};
     let stepHistory = [];
     let currentStepName = null;
+    let selectedOption = null;
 
     const STEP_ORDER = [
         'clientType',
@@ -228,37 +229,60 @@
         // ------------------------------------------
 
         if (Array.isArray(data.options)) {
+    html += '<div class="quiz-buttons">';
 
-            html += `
-                <div class="quiz-buttons">
-            `;
+    data.options.forEach(option => {
+        let buttonClass = 'quiz-btn';
 
-            data.options.forEach(option => {
-
-                let buttonClass = 'quiz-btn';
-
-                if (option.isPackage) {
-                    buttonClass += ' package-btn';
-                }
-
-                html += `
-                    <button
-                        type="button"
-                        class="${buttonClass}"
-                        data-step="${escapeHtml(stepName)}"
-                        data-value="${escapeHtml(option.value)}"
-                    >
-                        ${escapeHtml(option.label)}
-                    </button>
-                `;
-            });
-
-            html += '</div>';
-
-            // Кнопка назад находится ОДИН РАЗ
-            html += getBackButtonHtml();
+        if (option.isPackage) {
+            buttonClass += ' package-btn';
         }
 
+        if (selectedOption === option.value) {
+            buttonClass += ' selected';
+        }
+
+        html += `
+            <button
+                type="button"
+                class="${buttonClass}"
+                data-step="${escapeHtml(stepName)}"
+                data-value="${escapeHtml(option.value)}"
+            >
+                ${escapeHtml(option.label)}
+            </button>
+        `;
+    });
+
+    html += '</div>';
+
+    html += `
+        <div class="form-actions">
+    `;
+
+    if (canGoBack()) {
+        html += `
+            <button
+                type="button"
+                class="btn btn-secondary quiz-back-button"
+            >
+                ← Назад
+            </button>
+        `;
+    }
+
+    html += `
+            <button
+                type="button"
+                class="btn btn-primary"
+                id="next-btn"
+                ${selectedOption === null ? 'disabled' : ''}
+            >
+                Далее
+            </button>
+        </div>
+    `;
+}
 
         // ------------------------------------------
         // Поля формы
