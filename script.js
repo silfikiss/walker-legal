@@ -12,7 +12,7 @@ const STEP_ORDER = ['clientType', 'task', 'details', 'contacts'];
 function renderStep(stepName, data) {
     const container = document.getElementById('quiz-container');
     const stepDiv = document.createElement('div');
-    stepDiv.className = 'quiz-step'; // без active
+    stepDiv.className = 'quiz-step';
 
     const stepIndex = STEP_ORDER.indexOf(stepName);
     const showProgress = stepIndex !== -1;
@@ -56,6 +56,7 @@ function renderStep(stepName, data) {
         const btnLabel = (stepName === 'contacts') ? 'Отправить' : 'Далее';
         const onClick = (stepName === 'contacts') ? 'submitQuiz()' : 'handleFormNext()';
         html += `<div class="form-actions">`;
+        // Кнопка "Назад" – если есть история
         if (stepHistory.length > 0) {
             html += `<button type="button" class="btn btn-secondary" onclick="goBack()">← Назад</button>`;
         }
@@ -68,13 +69,25 @@ function renderStep(stepName, data) {
     container.innerHTML = '';
     container.appendChild(stepDiv);
 
-    // Обработчики для снятия подсветки ошибок
+    // Обработчики для снятия подсветки ошибок при вводе и для проверки при потере фокуса
     container.querySelectorAll('input, select, textarea').forEach(el => {
-        el.addEventListener('input', function() { this.classList.remove('error'); });
-        el.addEventListener('change', function() { this.classList.remove('error'); });
+        el.addEventListener('input', function() {
+            this.classList.remove('error');
+        });
+        el.addEventListener('change', function() {
+            this.classList.remove('error');
+        });
+        // При потере фокуса проверяем обязательные поля
+        el.addEventListener('blur', function() {
+            if (this.hasAttribute('required') && !this.value.trim()) {
+                this.classList.add('error');
+            } else {
+                this.classList.remove('error');
+            }
+        });
     });
 
-    // Плавное появление (через requestAnimationFrame, чтобы браузер успел отрендерить)
+    // Плавное появление
     requestAnimationFrame(() => {
         stepDiv.classList.add('active');
     });
@@ -109,6 +122,7 @@ function handleOptionClick(stepName, value) {
         if (detail) {
             renderStep('details', detail);
         } else {
+            // Если нет деталей, переходим сразу к контактам
             currentStepName = 'contacts';
             renderStep('contacts', data.contacts);
         }
@@ -161,6 +175,7 @@ function goBack() {
             currentStepName = 'details';
             renderStep('details', detail);
         } else {
+            // Если деталей нет, возвращаемся на task
             goBack();
         }
     }
@@ -170,7 +185,9 @@ function goBack() {
 function toggleSubmit() {
     const consent = document.getElementById('consent');
     const btn = document.getElementById('submit-btn');
-    if (btn) btn.disabled = !consent.checked;
+    if (btn) {
+        btn.disabled = !consent.checked;
+    }
 }
 
 // ===== Отправка анкеты =====
