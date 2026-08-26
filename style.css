@@ -683,3 +683,381 @@ footer a:hover {
         margin-top: 42px;
     }
 }
+/* =========================================================
+   WALKER LEGAL — FINAL VISUAL OVERRIDES
+   Добавить В КОНЕЦ style.css
+   ========================================================= */
+
+/* ---------- Базовая палитра ---------- */
+
+body {
+    background: #fcf9f2;
+    color: #2d3748;
+}
+
+.container {
+    padding-left: 40px;
+    padding-right: 40px;
+}
+
+/* ---------- Шапка ---------- */
+
+.header,
+.footer {
+    background: #2c3e50;
+}
+
+.nav a {
+    color: #dfe3e8;
+}
+
+.nav a:hover,
+.footer-links a:hover {
+    color: #c46a4a;
+}
+
+.logo {
+    color: #ffffff;
+}
+
+/* ---------- Основные кнопки ---------- */
+
+.btn-primary,
+.btn-next {
+    background: #c46a4a;
+    color: #ffffff;
+}
+
+.btn-primary:hover:not(:disabled),
+.btn-next:hover {
+    background: #a8553a;
+}
+
+.btn-primary:disabled {
+    background: #d6b0a2;
+    color: #f7ece8;
+}
+
+.btn-outline {
+    color: #c46a4a;
+    border-color: #c46a4a;
+}
+
+.btn-outline:hover {
+    background: #c46a4a;
+    color: #ffffff;
+}
+
+.btn-secondary,
+.btn-prev {
+    background: #b8a9c9;
+    color: #ffffff;
+    border-color: #b8a9c9;
+}
+
+.btn-secondary:hover,
+.btn-prev:hover {
+    background: #9b8ec4;
+}
+
+.btn-submit {
+    background: #74627f;
+    color: #ffffff;
+}
+
+.btn-submit:hover {
+    background: #604f6c;
+}
+
+/* ---------- Заголовки ---------- */
+
+h1,
+.quiz h2,
+.about-text-full h2,
+.partner-info h2,
+.partner-info h3,
+.practice-card h3,
+.package-card h3,
+.legal-text h2 {
+    color: #5b2c6f;
+}
+
+.subtitle,
+.about-text-full p,
+.partner-info p,
+.practice-card p,
+.package-card p,
+.legal-text p,
+.legal-text ul {
+    color: #5a6470;
+}
+
+/* ---------- Главный экран ---------- */
+
+.hero {
+    background: linear-gradient(
+        145deg,
+        #f5ede6,
+        #eee8f3
+    );
+}
+
+.hero p {
+    color: #4f5965;
+}
+
+/* ---------- Партнёр ---------- */
+
+.partner-section {
+    background: #f3eee8;
+}
+
+.photo-placeholder {
+    background: #d8cbe0;
+    color: #5b2c6f;
+}
+
+.partner-role {
+    color: #c46a4a;
+}
+
+/* ---------- Карточки ---------- */
+
+.practice-card,
+.package-card {
+    background: #ffffff;
+    border: 1px solid #e8e0d8;
+    box-shadow: 0 8px 24px rgba(44, 62, 80, 0.05);
+}
+
+.practice-card:hover,
+.package-card:hover {
+    box-shadow: 0 12px 32px rgba(44, 62, 80, 0.09);
+}
+
+/* =========================================================
+   АНКЕТА
+   ========================================================= */
+
+.quiz {
+    background: #ffffff;
+    border: 1px solid #e8e0d8;
+    box-shadow: 0 12px 40px rgba(44, 62, 80, 0.07);
+
+    /* больше воздуха по бокам */
+    padding-left: 42px;
+    padding-right: 42px;
+}
+
+.quiz h2 {
+    margin-bottom: 34px;
+}
+
+/* ---------- Варианты ответов ---------- */
+
+.quiz-buttons {
+    gap: 17px;
+}
+
+.quiz-btn {
+    background: #faf7f3;
+    color: #2d3748;
+    border: 2px solid #e8e0d8;
+    border-radius: 16px;
+
+    /* чуть больше воздуха внутри */
+    padding: 17px 21px;
+
+    line-height: 1.45;
+}
+
+.quiz-btn:hover {
+    background: #f5ede6;
+    border-color: #c46a4a;
+}
+
+.quiz-btn.package-btn {
+    background: #f0e8f5;
+    color: #5b2c6f;
+    border: 2px solid #b8a9c9;
+    box-shadow: 0 4px 12px rgba(116, 98, 127, 0.10);
+}
+
+.quiz-btn.package-btn:hover {
+    background: #e7dced;
+    border-color: #9b8ec4;
+    box-shadow: 0 6px 20px rgba(116, 98, 127, 0.16);
+}
+
+/* ---------- Формы ---------- */
+
+.quiz-form {
+    gap: 19px;
+}
+
+.quiz-form label {
+    color: #3f4650;
+}
+
+.quiz-form input,
+.quiz-form select,
+.quiz-form textarea {
+    border-color: #e8e0d8;
+    background: #fcfaf8;
+}
+
+.quiz-form input:focus,
+.quiz-form select:focus,
+.quiz-form textarea:focus {
+    border-color: #c46a4a;
+    background: #ffffff;
+    box-shadow: 0 0 0 3px rgba(196, 106, 74, 0.12);
+}
+
+/* ---------- Ошибки ---------- */
+
+input.error,
+select.error,
+textarea.error {
+    border-color: #c0392b !important;
+    background-color: #fdf0f0 !important;
+}
+
+/* ---------- Согласие ---------- */
+
+.consent-label {
+    color: #4d5560;
+}
+
+/* ---------- Кнопки формы ---------- */
+
+.form-actions {
+    gap: 15px;
+    margin-top: 34px;
+}
+
+/* ---------- Прогресс ---------- */
+
+.progress {
+    margin-top: 48px;
+    background: #e8e0d8;
+}
+
+.progress-bar {
+    background: linear-gradient(
+        90deg,
+        #74627f,
+        #c46a4a
+    );
+}
+
+.progress-label {
+    color: #6c7077;
+}
+
+/* ---------- Контакты ---------- */
+
+.contacts-placeholder {
+    background: #f3eee8;
+    color: #5a6470;
+}
+
+/* ---------- Юридический текст ---------- */
+
+.legal-text {
+    border: 1px solid #e8e0d8;
+}
+
+.legal-text h2 {
+    color: #5b2c6f;
+}
+
+/* ---------- Футер ---------- */
+
+.footer {
+    color: #d0d5da;
+}
+
+.footer-links a {
+    color: #bfc6cd;
+}
+
+/* =========================================================
+   РАВНОМЕРНЫЕ ОТСТУПЫ ПО КРАЯМ
+   ========================================================= */
+
+@media (max-width: 1100px) {
+    .container {
+        padding-left: 32px;
+        padding-right: 32px;
+    }
+}
+
+@media (max-width: 900px) {
+    .container {
+        padding-left: 28px;
+        padding-right: 28px;
+    }
+
+    .quiz {
+        padding-left: 34px;
+        padding-right: 34px;
+    }
+}
+
+@media (max-width: 700px) {
+
+    .container {
+        padding-left: 22px;
+        padding-right: 22px;
+    }
+
+    .quiz {
+        padding: 28px 22px 38px;
+        min-height: 450px;
+    }
+
+    .quiz h2 {
+        margin-bottom: 28px;
+    }
+
+    .quiz-buttons {
+        gap: 14px;
+    }
+
+    .quiz-btn {
+        padding: 15px 17px;
+        font-size: 0.98rem;
+    }
+
+    .progress {
+        margin-top: 40px;
+    }
+}
+
+@media (max-width: 480px) {
+
+    .container {
+        padding-left: 16px;
+        padding-right: 16px;
+    }
+
+    .quiz {
+        padding: 24px 16px 32px;
+    }
+
+    .quiz h2 {
+        font-size: 1.4rem;
+        margin-bottom: 25px;
+    }
+
+    .quiz-buttons {
+        gap: 12px;
+    }
+
+    .quiz-btn {
+        padding: 14px 15px;
+        font-size: 0.94rem;
+        border-radius: 14px;
+    }
+}
