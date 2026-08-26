@@ -6,7 +6,7 @@
 }
 
 html {
-    overflow-y: scroll; /* всегда показывать полосу прокрутки, чтобы страницы не ездили */
+    overflow-y: scroll;
 }
 
 body {
@@ -85,7 +85,7 @@ body {
     background: #2a6df4;
     color: #fff;
 }
-.btn-primary:hover {
+.btn-primary:hover:not(:disabled) {
     background: #1a4fbf;
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(42, 109, 244, 0.3);
@@ -94,11 +94,6 @@ body {
     background: #a0b8d9;
     color: #e0e7f0;
     cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
-.btn-primary:disabled:hover {
-    background: #a0b8d9;
     transform: none;
     box-shadow: none;
 }
@@ -451,8 +446,7 @@ h1 {
     cursor: pointer;
 }
 
-.consent-label input[type="checkbox"] {
-    accent-color: #2a6df4;
+.consent-label input {
     width: auto;
     transform: scale(1.2);
 }
@@ -599,6 +593,9 @@ input.error, select.error, textarea.error {
     .quiz {
         padding: 25px 18px;
         min-height: 450px;
+    }
+    .container {
+        padding: 0 15px;
     }
     .footer-inner {
         flex-direction: column;
