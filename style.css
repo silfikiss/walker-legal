@@ -85,11 +85,22 @@ body {
     background: #2a6df4;
     color: #fff;
 }
-
 .btn-primary:hover {
     background: #1a4fbf;
     transform: translateY(-2px);
     box-shadow: 0 6px 16px rgba(42, 109, 244, 0.3);
+}
+.btn-primary:disabled {
+    background: #a0b8d9;
+    color: #e0e7f0;
+    cursor: not-allowed;
+    transform: none;
+    box-shadow: none;
+}
+.btn-primary:disabled:hover {
+    background: #a0b8d9;
+    transform: none;
+    box-shadow: none;
 }
 
 .btn-outline {
@@ -97,7 +108,6 @@ body {
     color: #2a6df4;
     border: 2px solid #2a6df4;
 }
-
 .btn-outline:hover {
     background: #2a6df4;
     color: #fff;
@@ -441,7 +451,8 @@ h1 {
     cursor: pointer;
 }
 
-.consent-label input {
+.consent-label input[type="checkbox"] {
+    accent-color: #2a6df4;
     width: auto;
     transform: scale(1.2);
 }
@@ -471,7 +482,7 @@ input.error, select.error, textarea.error {
 
 /* Прогресс-бар и индикатор */
 .progress {
-    margin-top: 30px;
+    margin-top: 40px;
     height: 6px;
     background: #e6ecf5;
     border-radius: 10px;
@@ -487,9 +498,9 @@ input.error, select.error, textarea.error {
 
 .progress-label {
     text-align: right;
-    font-size: 0.9rem;
+    font-size: 0.95rem;
     color: #555;
-    margin-bottom: 6px;
+    margin-bottom: 10px;
     font-weight: 500;
 }
 
@@ -597,34 +608,4 @@ input.error, select.error, textarea.error {
         flex-direction: column;
         align-items: stretch;
     }
-}
-/* === Увеличение отступа для прогресс-бара === */
-.progress {
-    margin-top: 40px; /* было 30px */
-}
-
-.progress-label {
-    margin-bottom: 10px; /* было 6px */
-    font-size: 0.95rem;
-}
-
-/* Убедимся, что кнопка "Назад" всегда отображается, если есть история */
-/* это уже реализовано в JS, дополнительный CSS не нужен */
-/* === Стиль для disabled кнопки === */
-.btn-primary:disabled {
-    background: #a0b8d9;
-    color: #e0e7f0;
-    cursor: not-allowed;
-    transform: none;
-    box-shadow: none;
-}
-.btn-primary:disabled:hover {
-    background: #a0b8d9;
-    transform: none;
-    box-shadow: none;
-}
-
-/* Дополнительно: небольшая анимация для чекбокса */
-.consent-label input[type="checkbox"] {
-    accent-color: #2a6df4;
 }
