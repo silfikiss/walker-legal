@@ -182,30 +182,45 @@
         // Варианты ответа
         // ------------------------------------------
 
-        if (Array.isArray(data.options)) {
-            html += '<div class="quiz-buttons">';
+      if (Array.isArray(data.options)) {
+    html += '<div class="quiz-buttons">';
 
-            data.options.forEach(option => {
-                let buttonClass = 'quiz-btn';
+    data.options.forEach(option => {
+        let buttonClass = 'quiz-btn';
 
-                if (option.isPackage) {
-                    buttonClass += ' package-btn';
-                }
-
-                html += `
-                    <button
-                        type="button"
-                        class="${buttonClass}"
-                        data-step="${escapeHtml(stepName)}"
-                        data-value="${escapeHtml(option.value)}"
-                    >
-                        ${escapeHtml(option.label)}
-                    </button>
-                `;
-            });
-
-            html += '</div>';
+        if (option.isPackage) {
+            buttonClass += ' package-btn';
         }
+
+        html += `
+            <button
+                type="button"
+                class="${buttonClass}"
+                data-step="${escapeHtml(stepName)}"
+                data-value="${escapeHtml(option.value)}"
+            >
+                ${escapeHtml(option.label)}
+            </button>
+        `;
+    });
+
+    html += '</div>';
+
+    // Кнопка «Назад» для шагов с вариантами ответа
+    if (canGoBack()) {
+        html += `
+            <div class="form-actions">
+                <button
+                    type="button"
+                    class="btn btn-secondary"
+                    id="back-btn"
+                >
+                    ← Назад
+                </button>
+            </div>
+        `;
+    }
+}
 
         // ------------------------------------------
         // Поля формы
