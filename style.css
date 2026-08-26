@@ -598,3 +598,15 @@ input.error, select.error, textarea.error {
         align-items: stretch;
     }
 }
+/* === Увеличение отступа для прогресс-бара === */
+.progress {
+    margin-top: 40px; /* было 30px */
+}
+
+.progress-label {
+    margin-bottom: 10px; /* было 6px */
+    font-size: 0.95rem;
+}
+
+/* Убедимся, что кнопка "Назад" всегда отображается, если есть история */
+/* это уже реализовано в JS, дополнительный CSS не нужен */
