@@ -56,8 +56,8 @@ function renderStep(stepName, data) {
         const btnLabel = (stepName === 'contacts') ? 'Отправить' : 'Далее';
         const onClick = (stepName === 'contacts') ? 'submitQuiz()' : 'handleFormNext()';
         html += `<div class="form-actions">`;
-        // Кнопка "Назад" – если есть история
-        if (stepHistory.length > 0) {
+        // Кнопка "Назад" – если есть история или это не первый шаг
+        if (stepHistory.length > 0 || stepName !== 'clientType') {
             html += `<button type="button" class="btn btn-secondary" onclick="goBack()">← Назад</button>`;
         }
         html += `<button class="btn btn-primary" id="submit-btn" onclick="${onClick}" ${stepName === 'contacts' ? 'disabled' : ''}>${btnLabel}</button>`;
@@ -69,7 +69,7 @@ function renderStep(stepName, data) {
     container.innerHTML = '';
     container.appendChild(stepDiv);
 
-    // Обработчики для снятия подсветки ошибок при вводе и для проверки при потере фокуса
+    // Обработчики для снятия подсветки ошибок и проверки при потере фокуса
     container.querySelectorAll('input, select, textarea').forEach(el => {
         el.addEventListener('input', function() {
             this.classList.remove('error');
@@ -77,7 +77,6 @@ function renderStep(stepName, data) {
         el.addEventListener('change', function() {
             this.classList.remove('error');
         });
-        // При потере фокуса проверяем обязательные поля
         el.addEventListener('blur', function() {
             if (this.hasAttribute('required') && !this.value.trim()) {
                 this.classList.add('error');
