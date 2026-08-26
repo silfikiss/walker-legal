@@ -30,12 +30,42 @@
             <div class="package-card">
                 <h3>Постоянное юридическое сопровождение</h3>
                 <p>Абонентское обслуживание бизнеса: договоры, консультации, претензии.</p>
-                <a href="services.html" class="btn btn-outline">Подробнее</a>
+                <button class="btn btn-outline toggle-package" data-target="package1">Подробнее</button>
+                <div class="package-details" id="package1">
+                    <ul>
+                        <li>Неограниченные устные консультации</li>
+                        <li>Проверка и составление договоров (до 5 в месяц)</li>
+                        <li>Претензионная работа (до 3 претензий в месяц)</li>
+                        <li>Представительство в переговорах</li>
+                        <li>Срочные запросы (ответ в течение 24 часов)</li>
+                    </ul>
+                </div>
             </div>
             <div class="package-card">
                 <h3>Составление договоров</h3>
                 <p>Разработка договоров под вашу задачу: поставка, услуги, подряд, аренда.</p>
-                <a href="services.html" class="btn btn-outline">Подробнее</a>
+                <button class="btn btn-outline toggle-package" data-target="package2">Подробнее</button>
+                <div class="package-details" id="package2">
+                    <ul>
+                        <li>Анализ вашей ситуации</li>
+                        <li>Подготовка индивидуального проекта договора</li>
+                        <li>Согласование с другой стороной (до 2 раундов правок)</li>
+                        <li>Финальная проверка перед подписанием</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="package-card">
+                <h3>Судебное представительство</h3>
+                <p>Полное ведение дела в арбитражном суде или суде общей юрисдикции.</p>
+                <button class="btn btn-outline toggle-package" data-target="package3">Подробнее</button>
+                <div class="package-details" id="package3">
+                    <ul>
+                        <li>Анализ перспектив и сбор доказательств</li>
+                        <li>Подготовка процессуальных документов</li>
+                        <li>Участие в судебных заседаниях</li>
+                        <li>Обжалование решения (при необходимости)</li>
+                    </ul>
+                </div>
             </div>
         </div>
     </main>
@@ -51,5 +81,20 @@
         </div>
     </footer>
 
+    <script>
+        document.querySelectorAll('.toggle-package').forEach(btn => {
+            btn.addEventListener('click', function() {
+                const target = document.getElementById(this.dataset.target);
+                const isOpen = target.style.maxHeight && target.style.maxHeight !== '0px';
+                if (isOpen) {
+                    target.style.maxHeight = '0';
+                    this.textContent = 'Подробнее';
+                } else {
+                    target.style.maxHeight = target.scrollHeight + 'px';
+                    this.textContent = 'Скрыть';
+                }
+            });
+        });
+    </script>
 </body>
 </html>
