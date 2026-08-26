@@ -11,8 +11,8 @@ html {
 
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    background: #f8f9fc;
-    color: #1a1a2e;
+    background: #f5f8f5;
+    color: #1a2e1a;
     min-height: 100vh;
     display: flex;
     flex-direction: column;
@@ -25,9 +25,9 @@ body {
     width: 100%;
 }
 
-/* === Шапка === */
+/* === Шапка – тёмно-зелёная === */
 .header {
-    background: #0b1a33;
+    background: #1a3324;
     padding: 18px 0;
     box-shadow: 0 4px 12px rgba(0,0,0,0.08);
     position: sticky;
@@ -58,14 +58,14 @@ body {
 }
 
 .nav a {
-    color: #e0e7f0;
+    color: #d0e0d0;
     text-decoration: none;
     font-size: 0.95rem;
     transition: 0.2s;
 }
 
 .nav a:hover {
-    color: #aac8ff;
+    color: #aad4aa;
 }
 
 .btn {
@@ -81,18 +81,19 @@ body {
     font-family: inherit;
 }
 
+/* Основная кнопка – зелёная */
 .btn-primary {
-    background: #2a6df4;
+    background: #3d7a5a;
     color: #fff;
 }
 .btn-primary:hover:not(:disabled) {
-    background: #1a4fbf;
+    background: #2d5a42;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(42, 109, 244, 0.3);
+    box-shadow: 0 6px 16px rgba(61, 122, 90, 0.3);
 }
 .btn-primary:disabled {
-    background: #a0b8d9;
-    color: #e0e7f0;
+    background: #9bb8a8;
+    color: #e0ece0;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
@@ -100,21 +101,21 @@ body {
 
 .btn-outline {
     background: transparent;
-    color: #2a6df4;
-    border: 2px solid #2a6df4;
+    color: #3d7a5a;
+    border: 2px solid #3d7a5a;
 }
 .btn-outline:hover {
-    background: #2a6df4;
+    background: #3d7a5a;
     color: #fff;
 }
 
 .btn-secondary {
-    background: #e8ecf1;
-    color: #1a2d44;
-    border: 1px solid #cbd5e1;
+    background: #e8f0e8;
+    color: #1a3324;
+    border: 1px solid #bdd0bd;
 }
 .btn-secondary:hover {
-    background: #d5dce6;
+    background: #d0e0d0;
 }
 
 .btn-lg {
@@ -135,18 +136,18 @@ main {
 h1 {
     font-size: 2.4rem;
     margin-bottom: 10px;
-    color: #0b1a33;
+    color: #1a3324;
 }
 
 .subtitle {
     font-size: 1.2rem;
-    color: #555;
+    color: #4a6b4a;
     margin-bottom: 30px;
 }
 
-/* === Герой (главная) === */
+/* === Герой (главная) – светлый фон === */
 .hero {
-    background: linear-gradient(145deg, #eef4ff, #d9e4f5);
+    background: linear-gradient(145deg, #edf5ed, #dae8da);
     padding: 80px 0;
     text-align: center;
 }
@@ -161,7 +162,7 @@ h1 {
     font-size: 1.2rem;
     max-width: 700px;
     margin: 0 auto 35px;
-    color: #2c3e50;
+    color: #2a4a2a;
 }
 
 .hero-actions {
@@ -171,7 +172,7 @@ h1 {
     flex-wrap: wrap;
 }
 
-/* === О компании (предпросмотр) === */
+/* === О компании === */
 .about-preview,
 .about-full {
     padding: 50px 0;
@@ -185,18 +186,19 @@ h1 {
 .about-text-full h2 {
     font-size: 2rem;
     margin-bottom: 20px;
+    color: #1a3324;
 }
 
 .about-text-full p {
     font-size: 1.05rem;
     line-height: 1.7;
     margin-bottom: 20px;
-    color: #2d3a4a;
+    color: #2a4a2a;
 }
 
 /* === Партнёр === */
 .partner-section {
-    background: #f2f6fe;
+    background: #edf5ed;
     padding: 50px 0;
     margin-top: 30px;
 }
@@ -215,12 +217,12 @@ h1 {
 .photo-placeholder {
     width: 200px;
     height: 200px;
-    background: #b8cce4;
+    background: #bdd0bd;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    color: #1a2d44;
+    color: #1a3324;
     font-weight: 600;
     text-align: center;
     font-size: 1rem;
@@ -234,10 +236,11 @@ h1 {
 .partner-info h2 {
     font-size: 2rem;
     margin-bottom: 4px;
+    color: #1a3324;
 }
 
 .partner-role {
-    color: #2a6df4;
+    color: #3d7a5a;
     font-weight: 600;
     margin-bottom: 20px;
 }
@@ -245,12 +248,12 @@ h1 {
 .partner-info h3 {
     margin-top: 20px;
     font-size: 1.1rem;
-    color: #0b1a33;
+    color: #1a3324;
 }
 
 .partner-info p {
     line-height: 1.6;
-    color: #2d3a4a;
+    color: #2a4a2a;
 }
 
 /* === Карточки практик и пакетов === */
@@ -284,12 +287,12 @@ h1 {
 .package-card h3 {
     font-size: 1.4rem;
     margin-bottom: 12px;
-    color: #0b1a33;
+    color: #1a3324;
 }
 
 .practice-card p,
 .package-card p {
-    color: #3d4a5a;
+    color: #3a5a3a;
     line-height: 1.5;
 }
 
@@ -319,7 +322,7 @@ h1 {
 .quiz {
     background: #ffffff;
     border-radius: 32px;
-    padding: 40px 35px 50px 35px; /* увеличен нижний отступ */
+    padding: 40px 35px 50px 35px;
     box-shadow: 0 12px 40px rgba(0,0,0,0.06);
     max-width: 780px;
     margin: 0 auto;
@@ -345,8 +348,8 @@ h1 {
 
 .quiz h2 {
     font-size: 1.6rem;
-    margin-bottom: 30px; /* больше воздуха */
-    color: #0b1a33;
+    margin-bottom: 30px;
+    color: #1a3324;
     font-weight: 600;
 }
 
@@ -360,12 +363,12 @@ h1 {
     display: block;
     width: 100%;
     padding: 16px 20px;
-    background: #f0f4fe;
+    background: #f0f8f0;
     border: 2px solid transparent;
     border-radius: 16px;
     font-size: 1.05rem;
     font-weight: 500;
-    color: #0b1a33;
+    color: #1a3324;
     text-align: left;
     transition: 0.2s;
     cursor: pointer;
@@ -373,23 +376,23 @@ h1 {
 }
 
 .quiz-btn:hover {
-    background: #e1eaff;
-    border-color: #2a6df4;
+    background: #dcecdc;
+    border-color: #3d7a5a;
 }
 
 .quiz-btn.package-btn {
-    background: #eef4ff;
-    border: 2px solid #2a6df4;
+    background: #e8f4e8;
+    border: 2px solid #3d7a5a;
     border-radius: 16px;
     padding: 18px 20px;
     font-weight: 700;
-    box-shadow: 0 4px 12px rgba(42, 109, 244, 0.15);
+    box-shadow: 0 4px 12px rgba(61, 122, 90, 0.15);
 }
 
 .quiz-btn.package-btn:hover {
-    background: #dce6ff;
+    background: #d0e8d0;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(42, 109, 244, 0.25);
+    box-shadow: 0 6px 20px rgba(61, 122, 90, 0.25);
 }
 
 .quiz-form {
@@ -401,19 +404,19 @@ h1 {
 .quiz-form label {
     font-weight: 500;
     font-size: 0.95rem;
-    color: #1a2d44;
+    color: #1a3324;
 }
 
 .quiz-form input,
 .quiz-form select,
 .quiz-form textarea {
     padding: 14px 18px;
-    border: 2px solid #dce2ec;
+    border: 2px solid #d0e0d0;
     border-radius: 14px;
     font-size: 1rem;
     transition: 0.2s;
     width: 100%;
-    background: #fafcff;
+    background: #fafcfa;
     font-family: inherit;
     font-weight: 400;
 }
@@ -428,7 +431,7 @@ h1 {
 .quiz-form input:focus,
 .quiz-form select:focus,
 .quiz-form textarea:focus {
-    border-color: #2a6df4;
+    border-color: #3d7a5a;
     outline: none;
     background: #fff;
 }
@@ -452,18 +455,18 @@ h1 {
 }
 
 .required-star {
-    color: #e74c3c;
+    color: #c0392b;
     font-weight: bold;
     margin-left: 2px;
 }
 
 input.error, select.error, textarea.error {
-    border-color: #e74c3c !important;
-    background-color: #fff5f5 !important;
+    border-color: #c0392b !important;
+    background-color: #fdf0f0 !important;
 }
 
 .consent-label.error input {
-    outline: 2px solid #e74c3c;
+    outline: 2px solid #c0392b;
 }
 
 /* === Кнопки управления – увеличен отступ сверху === */
@@ -471,15 +474,15 @@ input.error, select.error, textarea.error {
     display: flex;
     gap: 15px;
     align-items: center;
-    margin-top: 30px; /* было 20px */
+    margin-top: 30px;
     flex-wrap: wrap;
 }
 
 /* === Прогресс-бар и индикатор – увеличены отступы === */
 .progress {
-    margin-top: 45px; /* было 40px */
+    margin-top: 45px;
     height: 6px;
-    background: #e6ecf5;
+    background: #dcecdc;
     border-radius: 10px;
     overflow: hidden;
 }
@@ -487,30 +490,30 @@ input.error, select.error, textarea.error {
 .progress-bar {
     height: 100%;
     width: 0%;
-    background: #2a6df4;
+    background: #3d7a5a;
     transition: width 0.4s ease;
 }
 
 .progress-label {
     text-align: right;
     font-size: 0.95rem;
-    color: #555;
-    margin-bottom: 12px; /* было 10px */
+    color: #4a6b4a;
+    margin-bottom: 12px;
     font-weight: 500;
 }
 
 /* === Финальный экран (спасибо) – кнопка с отступом === */
 .quiz-step .btn {
-    margin-top: 25px; /* отступ от текста */
+    margin-top: 25px;
 }
 
 /* === Контакты === */
 .contacts-placeholder {
-    background: #f0f4fe;
+    background: #edf5ed;
     padding: 40px;
     border-radius: 24px;
     text-align: center;
-    color: #2a3a4e;
+    color: #2a4a2a;
     font-size: 1.1rem;
 }
 
@@ -527,12 +530,13 @@ input.error, select.error, textarea.error {
 .legal-text h2 {
     margin-top: 30px;
     font-size: 1.4rem;
+    color: #1a3324;
 }
 
 .legal-text p,
 .legal-text ul {
     line-height: 1.7;
-    color: #2d3a4a;
+    color: #2a4a2a;
 }
 
 .legal-text ul {
@@ -541,8 +545,8 @@ input.error, select.error, textarea.error {
 
 /* === Футер === */
 .footer {
-    background: #0b1a33;
-    color: #b0c4dd;
+    background: #1a3324;
+    color: #b0d0b0;
     padding: 30px 0;
     margin-top: auto;
     flex-shrink: 0;
@@ -563,7 +567,7 @@ input.error, select.error, textarea.error {
 }
 
 .footer-links a {
-    color: #b0c4dd;
+    color: #b0d0b0;
     text-decoration: none;
     font-size: 0.9rem;
     transition: 0.2s;
@@ -597,11 +601,11 @@ input.error, select.error, textarea.error {
         font-size: 2rem;
     }
     .quiz {
-        padding: 25px 18px 35px 18px; /* увеличен нижний отступ */
+        padding: 25px 18px 35px 18px;
         min-height: 450px;
     }
     .container {
-        padding: 0 15px; /* на мобильных чуть меньше, но отступы сохраняются */
+        padding: 0 15px;
     }
     .footer-inner {
         flex-direction: column;
