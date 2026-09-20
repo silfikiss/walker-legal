@@ -710,10 +710,6 @@ textarea.error {
 /* === Адаптив === */
 
 @media (max-width: 900px) {
-    .container {
-        padding: 0 30px;
-    }
-
     .quiz {
         padding-left: 30px;
         padding-right: 30px;
@@ -765,10 +761,6 @@ textarea.error {
         padding: 16px 18px;
     }
 
-    .container {
-        padding: 0 20px;
-    }
-
     .footer-inner {
         flex-direction: column;
         text-align: center;
@@ -785,10 +777,6 @@ textarea.error {
 }
 
 @media (max-width: 480px) {
-    .container {
-        padding: 0 16px;
-    }
-
     .hero h1 {
         font-size: 1.7rem;
     }
