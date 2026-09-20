@@ -254,6 +254,7 @@ h1 {
     display: block;
     box-shadow: 0 8px 24px rgba(48, 43, 53, 0.12);
 }
+
 .partner-info {
     flex: 1;
 }
@@ -707,6 +708,10 @@ textarea.error {
     }
 
     .photo-placeholder {
+        margin: 0 auto;
+    }
+
+        .partner-photo {
         margin: 0 auto;
     }
 
