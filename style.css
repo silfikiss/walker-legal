@@ -442,7 +442,40 @@ h1 {
     box-shadow: 0 6px 20px rgba(116, 98, 127, 0.20);
 }
 
+/* Выбранный вариант */
 
+.quiz-btn.selected {
+    background: #f3ebe6;
+    border-color: #c87559;
+    color: #51415b;
+    font-weight: 700;
+    box-shadow: 0 4px 16px rgba(200, 117, 89, 0.20);
+    transform: translateY(-2px);
+}
+
+.quiz-btn.selected::after {
+    content: "✓";
+    float: right;
+    color: #c87559;
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-left: 10px;
+}
+
+/* Выбранный вариант-пакет (фиолетовый) */
+
+.quiz-btn.package-btn.selected {
+    background: #e4d8eb;
+    border-color: #75627e;
+    color: #3c2f46;
+    font-weight: 700;
+    box-shadow: 0 6px 20px rgba(116, 98, 127, 0.28);
+    transform: translateY(-2px);
+}
+
+.quiz-btn.package-btn.selected::after {
+    color: #75627e;
+}
 /* === Поля формы === */
 
 .quiz-form {
