@@ -22,7 +22,7 @@ body {
 .container {
     max-width: 1200px;
     margin: 0 auto;
-    padding: 0 40px;
+    padding: 0 clamp(16px, 5vw, 60px);
     width: 100%;
 }
 
