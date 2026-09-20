@@ -807,7 +807,6 @@
     // ==========================================
     // ОТПРАВКА
     // ==========================================
-
     function submitQuiz() {
 
         if (!validateForm()) {
@@ -826,14 +825,49 @@
             return;
         }
 
+        const nextBtn =
+            document.getElementById('next-btn');
 
-        console.log(
-            '[Walker Legal] Ответы анкеты:',
-            answers
-        );
+        if (nextBtn) {
+            nextBtn.disabled = true;
+            nextBtn.textContent = 'Отправляем…';
+        }
 
+        const payload = {
+            access_key: 'ВСТАВЬТЕ_СЮДА_ВАШ_ACCESS_KEY',
+            subject: 'Новая заявка с сайта Walker Legal',
+            from_name: 'Walker Legal',
+            ...answers
+        };
 
-        showSuccessScreen();
+        fetch('https://api.web3forms.com/submit', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                showSuccessScreen();
+            } else {
+                alert('Не удалось отправить заявку. Попробуйте ещё раз или напишите нам на walkerlegal@yandex.ru');
+                if (nextBtn) {
+                    nextBtn.disabled = false;
+                    nextBtn.textContent = 'Отправить';
+                }
+            }
+        })
+        .catch(error => {
+            console.error('Ошибка отправки:', error);
+            alert('Ошибка соединения. Проверьте интернет и попробуйте снова.');
+            if (nextBtn) {
+                nextBtn.disabled = false;
+                nextBtn.textContent = 'Отправить';
+            }
+        });
     }
 
 
