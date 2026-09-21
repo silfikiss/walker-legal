@@ -356,10 +356,7 @@ h1 {
 .quiz {
     background: #ffffff;
     border-radius: 32px;
-
-    /* Оставляем увеличенный размер из удачной зелёной версии */
     padding: 40px 35px 50px;
-
     box-shadow: 0 12px 40px rgba(48, 43, 53, 0.06);
     max-width: 780px;
     margin: 0 auto;
@@ -425,24 +422,26 @@ h1 {
     box-shadow: 0 4px 12px rgba(48, 43, 53, 0.05);
 }
 
+/* Пакетная кнопка — зелёная */
+
 .quiz-btn.package-btn {
-    background: #eee7f3;
-    border: 2px solid #b9a7c6;
+    background: #e8f0e3;
+    border: 2px solid #6b8e5a;
     border-radius: 16px;
     padding: 18px 20px;
     font-weight: 700;
-    color: #51415b;
-    box-shadow: 0 4px 12px rgba(116, 98, 127, 0.14);
+    color: #3f5637;
+    box-shadow: 0 4px 12px rgba(107, 142, 90, 0.14);
 }
 
 .quiz-btn.package-btn:hover {
-    background: #e4d8eb;
-    border-color: #9d8aae;
+    background: #d8e6cf;
+    border-color: #567347;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(116, 98, 127, 0.20);
+    box-shadow: 0 6px 20px rgba(107, 142, 90, 0.20);
 }
 
-/* Выбранный вариант */
+/* Обычная выбранная кнопка — терракотовая */
 
 .quiz-btn.selected {
     background: #f3ebe6;
@@ -462,20 +461,22 @@ h1 {
     margin-left: 10px;
 }
 
-/* Выбранный вариант-пакет (фиолетовый) */
+/* Пакетная выбранная кнопка — зелёная */
 
 .quiz-btn.package-btn.selected {
-    background: #e4d8eb;
-    border-color: #75627e;
-    color: #3c2f46;
+    background: #d8e6cf;
+    border-color: #567347;
+    color: #2f4228;
     font-weight: 700;
-    box-shadow: 0 6px 20px rgba(116, 98, 127, 0.28);
+    box-shadow: 0 6px 20px rgba(107, 142, 90, 0.28);
     transform: translateY(-2px);
 }
 
 .quiz-btn.package-btn.selected::after {
-    color: #75627e;
+    color: #567347;
 }
+
+
 /* === Поля формы === */
 
 .quiz-form {
@@ -740,7 +741,7 @@ textarea.error {
         margin: 0 auto;
     }
 
-        .partner-photo {
+    .partner-photo {
         margin: 0 auto;
     }
 
