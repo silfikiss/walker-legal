@@ -807,68 +807,68 @@
     // ==========================================
     // ОТПРАВКА
     // ==========================================
-    function submitQuiz() {
+function submitQuiz() {
 
-        if (!validateForm()) {
-            return;
-        }
+    if (!validateForm()) {
+        return;
+    }
 
-        const consent =
-            document.getElementById(
-                'consent'
-            );
+    const consent =
+        document.getElementById(
+            'consent'
+        );
 
-        if (
-            !consent ||
-            !consent.checked
-        ) {
-            return;
-        }
+    if (
+        !consent ||
+        !consent.checked
+    ) {
+        return;
+    }
 
-        const nextBtn =
-            document.getElementById('next-btn');
+    const nextBtn =
+        document.getElementById('next-btn');
 
-        if (nextBtn) {
-            nextBtn.disabled = true;
-            nextBtn.textContent = 'Отправляем…';
-        }
+    if (nextBtn) {
+        nextBtn.disabled = true;
+        nextBtn.textContent = 'Отправляем…';
+    }
 
-        const payload = {
-            access_key: 'ВСТАВЬТЕ_СЮДА_ВАШ_ACCESS_KEY',
-            subject: 'Новая заявка с сайта Walker Legal',
-            from_name: 'Walker Legal',
-            ...answers
-        };
+    const payload = {
+        access_key: '8c0237fe-b2fb-4dab-a9b1-6e9a4785fb96',
+        subject: 'Новая заявка с сайта Walker Legal',
+        from_name: 'Walker Legal',
+        ...answers
+    };
 
-        fetch('https://api.web3forms.com/submit', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.success) {
-                showSuccessScreen();
-            } else {
-                alert('Не удалось отправить заявку. Попробуйте ещё раз или напишите нам на walkerlegal@yandex.ru');
-                if (nextBtn) {
-                    nextBtn.disabled = false;
-                    nextBtn.textContent = 'Отправить';
-                }
-            }
-        })
-        .catch(error => {
-            console.error('Ошибка отправки:', error);
-            alert('Ошибка соединения. Проверьте интернет и попробуйте снова.');
+    fetch('https://api.web3forms.com/submit', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'Accept': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            showSuccessScreen();
+        } else {
+            alert('Не удалось отправить заявку. Попробуйте ещё раз или напишите нам на walkerlegal@yandex.ru');
             if (nextBtn) {
                 nextBtn.disabled = false;
                 nextBtn.textContent = 'Отправить';
             }
-        });
-    }
+        }
+    })
+    .catch(error => {
+        console.error('Ошибка отправки:', error);
+        alert('Ошибка соединения. Проверьте интернет и попробуйте снова.');
+        if (nextBtn) {
+            nextBtn.disabled = false;
+            nextBtn.textContent = 'Отправить';
+        }
+    });
+}
 
 
     // ==========================================
