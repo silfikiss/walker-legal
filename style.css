@@ -68,7 +68,7 @@ body {
 }
 
 .nav a:hover {
-    color: #d58a6d;
+    color: #8fae7d;
 }
 
 
@@ -88,19 +88,19 @@ body {
 }
 
 .btn-primary {
-    background: #c87559;
+    background: #6b8e5a;
     color: #ffffff;
 }
 
 .btn-primary:hover:not(:disabled) {
-    background: #ae5d45;
+    background: #567347;
     transform: translateY(-2px);
-    box-shadow: 0 6px 16px rgba(200, 117, 89, 0.28);
+    box-shadow: 0 6px 16px rgba(107, 142, 90, 0.28);
 }
 
 .btn-primary:disabled {
-    background: #d7b4a6;
-    color: #f2e5df;
+    background: #b5c9a8;
+    color: #eef3ea;
     cursor: not-allowed;
     transform: none;
     box-shadow: none;
@@ -108,12 +108,12 @@ body {
 
 .btn-outline {
     background: transparent;
-    color: #c87559;
-    border: 2px solid #c87559;
+    color: #6b8e5a;
+    border: 2px solid #6b8e5a;
 }
 
 .btn-outline:hover {
-    background: #c87559;
+    background: #6b8e5a;
     color: #ffffff;
 }
 
@@ -266,7 +266,7 @@ h1 {
 }
 
 .partner-role {
-    color: #c87559;
+    color: #6b8e5a;
     font-weight: 600;
     margin-bottom: 20px;
 }
@@ -417,63 +417,57 @@ h1 {
 }
 
 .quiz-btn:hover {
-    background: #f3ebe6;
-    border-color: #c87559;
+    background: #eef3ea;
+    border-color: #6b8e5a;
     box-shadow: 0 4px 12px rgba(48, 43, 53, 0.05);
 }
 
-/* Пакетная кнопка — зелёная */
-
 .quiz-btn.package-btn {
-    background: #e8f0e3;
-    border: 2px solid #6b8e5a;
+    background: #eee7f3;
+    border: 2px solid #b9a7c6;
     border-radius: 16px;
     padding: 18px 20px;
     font-weight: 700;
-    color: #3f5637;
-    box-shadow: 0 4px 12px rgba(107, 142, 90, 0.14);
+    color: #51415b;
+    box-shadow: 0 4px 12px rgba(116, 98, 127, 0.14);
 }
 
 .quiz-btn.package-btn:hover {
-    background: #d8e6cf;
-    border-color: #567347;
+    background: #e4d8eb;
+    border-color: #9d8aae;
     transform: translateY(-2px);
-    box-shadow: 0 6px 20px rgba(107, 142, 90, 0.20);
+    box-shadow: 0 6px 20px rgba(116, 98, 127, 0.20);
 }
 
-/* Обычная выбранная кнопка — терракотовая */
-
 .quiz-btn.selected {
-    background: #f3ebe6;
-    border-color: #c87559;
-    color: #51415b;
+    background: #eef3ea;
+    border-color: #6b8e5a;
+    color: #2f4228;
     font-weight: 700;
-    box-shadow: 0 4px 16px rgba(200, 117, 89, 0.20);
+    box-shadow: 0 4px 16px rgba(107, 142, 90, 0.20);
     transform: translateY(-2px);
 }
 
 .quiz-btn.selected::after {
     content: "✓";
     float: right;
-    color: #c87559;
+    color: #6b8e5a;
     font-weight: 700;
     font-size: 1.1rem;
     margin-left: 10px;
 }
 
-/* Пакетная выбранная кнопка — зелёная */
-
 .quiz-btn.package-btn.selected {
-    background: #d8e6cf;
-    border-color: #567347;
-    color: #2f4228;
+    background: #e4d8eb;
+    border-color: #75627e;
+    color: #3c2f46;
     font-weight: 700;
-    box-shadow: 0 6px 20px rgba(107, 142, 90, 0.28);
+    box-shadow: 0 6px 20px rgba(116, 98, 127, 0.28);
     transform: translateY(-2px);
 }
 
 .quiz-btn.package-btn.selected::after {
-    color: #567347;
+    color: #75627e;
 }
 
 
@@ -518,10 +512,10 @@ h1 {
 .quiz-form input:focus,
 .quiz-form select:focus,
 .quiz-form textarea:focus {
-    border-color: #c87559;
+    border-color: #6b8e5a;
     outline: none;
     background: #ffffff;
-    box-shadow: 0 0 0 3px rgba(200, 117, 89, 0.12);
+    box-shadow: 0 0 0 3px rgba(107, 142, 90, 0.12);
 }
 
 .quiz-form textarea {
@@ -581,12 +575,12 @@ textarea.error {
 }
 
 .btn-next {
-    background: #c87559;
+    background: #6b8e5a;
     color: #ffffff;
 }
 
 .btn-next:hover {
-    background: #ae5d45;
+    background: #567347;
 }
 
 .btn-submit {
@@ -612,7 +606,7 @@ textarea.error {
 .progress-bar {
     height: 100%;
     width: 0%;
-    background: linear-gradient(90deg, #75627e, #c87559);
+    background: linear-gradient(90deg, #75627e, #6b8e5a);
     transition: width 0.4s ease;
 }
 
