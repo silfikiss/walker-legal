@@ -74,7 +74,8 @@ const quizData = {
             fields: [
                 { name: 'role', label: 'В каком качестве участвует компания?', type: 'select', options: ['Хотим подать иск', 'Мы истец', 'Мы ответчик', 'Третье лицо / иной участник'], required: true },
                 { name: 'subject', label: 'О чем спор?', type: 'textarea' },
-                { name: 'court_info', label: 'Дело уже принято судом?', type: 'select', options: ['Нет', 'Да — указать суд и номер дела', 'Не знаю'] },
+                { name: 'court_info', label: 'Дело уже принято судом?', type: 'select', options: ['Нет', 'Да', 'Не знаю'] },
+                { name: 'case_number', label: 'Суд и номер дела (если дело уже в суде)', type: 'text', placeholder: 'Например, АС г. Москвы, А40-123456/2026' },
                 { name: 'help', label: 'Какая помощь нужна?', type: 'select', options: ['Оценить перспективы', 'Подготовить иск / отзыв / жалобу', 'Представлять в суде', 'Обжаловать решение', 'Подключиться к уже идущему делу'] },
                 { name: 'amount', label: 'Какова примерная цена иска / стоимость требований?', type: 'select', options: ['До 200 000 ₽', '200 000–1 млн ₽', '1–5 млн ₽', 'Более 5 млн ₽', 'Неимущественный спор', 'Не можем оценить требование'] }
             ]
@@ -82,7 +83,7 @@ const quizData = {
         support: {
             question: 'Уточните формат поддержки:',
             fields: [
-                { name: 'tasks', label: 'Какие задачи возникают регулярно?', type: 'select', options: ['Договоры', 'Текущие консультации', 'Претензии и долги', 'Переговоры', 'Корпоративные вопросы', 'Сотрудники', 'Интеллектуальные права', 'Суды'], required: true },
+                { name: 'tasks', label: 'Какие задачи возникают регулярно? Можно выбрать несколько', type: 'checkboxes', options: ['Договоры', 'Текущие консультации', 'Претензии и долги', 'Переговоры', 'Корпоративные вопросы', 'Сотрудники', 'Интеллектуальные права', 'Суды'], required: true },
                 { name: 'count', label: 'Сколько задач обычно возникает в месяц?', type: 'select', options: ['1–2', '3–5', '6–10', 'Более 10', 'Пока не знаем'] },
                 { name: 'has_lawyer', label: 'Есть ли свой юрист?', type: 'select', options: ['Нет', 'Есть один юрист', 'Есть юридический отдел', 'Используем внешних консультантов'] },
                 { name: 'format', label: 'Какой формат нужен?', type: 'select', options: ['Полностью внешний юридический ресурс', 'Поддержка своего юриста', 'Помощь только по отдельным направлениям', 'Нужна рекомендация'] }
@@ -144,7 +145,7 @@ const quizData = {
         audit: {
             question: 'Уточните по аудиту:',
             fields: [
-                { name: 'scope', label: 'Что нужно проверить или настроить?', type: 'select', options: ['Договоры', 'Корпоративные документы', 'Работу с сотрудниками', 'Интеллектуальные права', 'Рекламу и персональные данные', 'Все основные юридические процессы'], required: true },
+                { name: 'scope', label: 'Что нужно проверить или настроить? Можно выбрать несколько', type: 'checkboxes', options: ['Договоры', 'Корпоративные документы', 'Работу с сотрудниками', 'Интеллектуальные права', 'Рекламу и персональные данные', 'Все основные юридические процессы'], required: true },
                 { name: 'volume', label: 'Какой примерный объем документов?', type: 'select', options: ['До 10', '11–30', '31–100', 'Более 100', 'Пока не знаем'] },
                 { name: 'result', label: 'Какой результат нужен?', type: 'select', options: ['Карта рисков', 'Новые шаблоны', 'Порядок согласования документов', 'План исправления нарушений', 'Полная договорная система'] },
                 { name: 'priority', label: 'Есть ли приоритетное направление?', type: 'text', placeholder: 'Напишите, если есть' }
@@ -212,7 +213,8 @@ const quizData = {
             fields: [
                 { name: 'situation', label: 'Какая у вас ситуация?', type: 'select', options: ['Хочу подать иск', 'На меня подали иск', 'Я уже участвую в деле', 'Хочу обжаловать решение'], required: true },
                 { name: 'subject', label: 'О чем спор?', type: 'textarea' },
-                { name: 'court_info', label: 'Дело уже находится в суде?', type: 'select', options: ['Нет', 'Да — указать суд и номер дела', 'Не знаю'] },
+                { name: 'court_info', label: 'Дело уже находится в суде?', type: 'select', options: ['Нет', 'Да', 'Не знаю'] },
+                { name: 'case_number', label: 'Суд и номер дела (если дело уже в суде)', type: 'text', placeholder: 'Например, АС г. Москвы, А40-123456/2026' },
                 { name: 'help', label: 'Какая помощь нужна?', type: 'select', options: ['Оценить перспективы', 'Подготовить документы', 'Представлять в суде', 'Обжаловать решение', 'Подключиться к делу на текущей стадии'] },
                 { name: 'amount', label: 'Какова примерная цена иска?', type: 'select', options: ['До 200 000 ₽', '200 000–1 млн ₽', '1–5 млн ₽', 'Более 5 млн ₽', 'Неимущественный спор', 'Не можете оценить ваше требование'] }
             ]
@@ -321,10 +323,10 @@ const quizData = {
     contacts: {
         question: 'Как с вами связаться?',
         fields: [
-            { name: 'name', label: 'Ваше имя', type: 'text', required: true },
-            { name: 'email', label: 'Email', type: 'email', required: true },
-            { name: 'phone', label: 'Телефон или Telegram', type: 'tel', required: false },
-            { name: 'time', label: 'Удобное время для звонка', type: 'text', required: false }
+            { name: 'name', label: 'Ваше имя', type: 'text', required: true, autocomplete: 'name' },
+            { name: 'email', label: 'Email', type: 'email', required: true, autocomplete: 'email', placeholder: 'name@example.ru' },
+            { name: 'phone', label: 'Телефон или Telegram', type: 'text', required: false, autocomplete: 'tel', placeholder: '+7 900 000-00-00 или @username' },
+            { name: 'time', label: 'Удобное время для звонка', type: 'text', required: false, placeholder: 'Например, будни после 15:00' }
         ]
     }
 };

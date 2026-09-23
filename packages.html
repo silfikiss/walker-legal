@@ -4,33 +4,55 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Пакетные решения — Walker Legal</title>
-    <link rel="stylesheet" href="style.css">
+    <meta name="description" content="Абонентское юридическое сопровождение, составление договоров, судебное представительство.">
+    <link rel="canonical" href="https://walkerlegal.ru/packages.html">
+    <meta name="theme-color" content="#302b35">
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+    <meta property="og:type" content="website">
+    <meta property="og:locale" content="ru_RU">
+    <meta property="og:site_name" content="Walker Legal">
+    <meta property="og:title" content="Пакетные решения — Walker Legal">
+    <meta property="og:description" content="Абонентское юридическое сопровождение, составление договоров, судебное представительство.">
+    <meta property="og:url" content="https://walkerlegal.ru/packages.html">
+    <meta property="og:image" content="https://walkerlegal.ru/images/sasha0205.jpg">
+
+    <link rel="stylesheet" href="style.css?v=20260923">
 </head>
 <body>
+
+    <a href="#main" class="skip-link">Перейти к содержанию</a>
 
     <header class="header">
         <div class="container header-inner">
             <a href="index.html" class="logo">WALKER LEGAL</a>
-            <nav class="nav">
+
+            <button type="button" class="nav-toggle" aria-expanded="false" aria-controls="site-nav" aria-label="Открыть меню">
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+                <span class="nav-toggle-bar"></span>
+            </button>
+
+            <nav class="nav" id="site-nav" aria-label="Основное меню">
                 <a href="services.html">Наши услуги</a>
                 <a href="practices.html">Практики</a>
-                <a href="packages.html">Пакетные решения</a>
+                <a href="packages.html" class="active" aria-current="page">Пакетные решения</a>
                 <a href="about.html">О компании</a>
                 <a href="contacts.html">Контакты</a>
+                <a href="services.html" class="btn btn-primary nav-cta">Обратиться</a>
             </nav>
-            <a href="services.html" class="btn btn-primary">Обратиться</a>
         </div>
     </header>
 
-    <main class="container page-content">
+    <main id="main" class="container page-content">
         <h1>Пакетные решения</h1>
-        <p class="subtitle">Готовые пакеты услуг с фиксированными ценами.</p>
+        <p class="subtitle">Готовые форматы работы. Стоимость назовём после короткого обсуждения задачи.</p>
 
         <div class="packages-grid">
             <div class="package-card">
                 <h3>Постоянное юридическое сопровождение</h3>
                 <p>Абонентское обслуживание бизнеса: договоры, консультации, претензии.</p>
-                <button class="btn btn-outline toggle-package" data-target="package1">Подробнее</button>
+                <button type="button" class="btn btn-outline toggle-package" aria-expanded="false" aria-controls="package1">Подробнее</button>
                 <div class="package-details" id="package1">
                     <ul>
                         <li>Неограниченные устные консультации</li>
@@ -44,7 +66,7 @@
             <div class="package-card">
                 <h3>Составление договоров</h3>
                 <p>Разработка договоров под вашу задачу: поставка, услуги, подряд, аренда.</p>
-                <button class="btn btn-outline toggle-package" data-target="package2">Подробнее</button>
+                <button type="button" class="btn btn-outline toggle-package" aria-expanded="false" aria-controls="package2">Подробнее</button>
                 <div class="package-details" id="package2">
                     <ul>
                         <li>Анализ вашей ситуации</li>
@@ -57,7 +79,7 @@
             <div class="package-card">
                 <h3>Судебное представительство</h3>
                 <p>Полное ведение дела в арбитражном суде или суде общей юрисдикции.</p>
-                <button class="btn btn-outline toggle-package" data-target="package3">Подробнее</button>
+                <button type="button" class="btn btn-outline toggle-package" aria-expanded="false" aria-controls="package3">Подробнее</button>
                 <div class="package-details" id="package3">
                     <ul>
                         <li>Анализ перспектив и сбор доказательств</li>
@@ -68,33 +90,25 @@
                 </div>
             </div>
         </div>
+
+        <p class="packages-cta">
+            <a href="services.html" class="btn btn-primary">Обсудить задачу</a>
+        </p>
     </main>
 
     <footer class="footer">
         <div class="container footer-inner">
-            <span>© 2025 Walker Legal</span>
+            <span>© 2026 Walker Legal</span>
             <div class="footer-links">
                 <a href="privacy.html">Политика обработки персональных данных</a>
+                <a href="consent.html">Согласие на обработку персональных данных</a>
                 <a href="offer.html">Публичная оферта</a>
                 <a href="contacts.html">Контакты</a>
             </div>
         </div>
     </footer>
 
-    <script>
-        document.querySelectorAll('.toggle-package').forEach(btn => {
-            btn.addEventListener('click', function() {
-                const target = document.getElementById(this.dataset.target);
-                const isOpen = target.style.maxHeight && target.style.maxHeight !== '0px';
-                if (isOpen) {
-                    target.style.maxHeight = '0';
-                    this.textContent = 'Подробнее';
-                } else {
-                    target.style.maxHeight = target.scrollHeight + 'px';
-                    this.textContent = 'Скрыть';
-                }
-            });
-        });
-    </script>
+    <script src="script.js?v=20260923" defer></script>
+
 </body>
 </html>
