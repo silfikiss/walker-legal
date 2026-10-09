@@ -1205,3 +1205,14 @@ textarea.error {
         scroll-behavior: auto !important;
     }
 }
+
+/* Если блок партнёра стоит в конце страницы, отделяем его от тёмного подвала */
+main > .portrait:last-child {
+    margin-bottom: 72px;
+}
+
+@media (max-width: 700px) {
+    main > .portrait:last-child {
+        margin-bottom: 40px;
+    }
+}
