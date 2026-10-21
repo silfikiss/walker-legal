@@ -324,7 +324,7 @@ const quizData = {
         question: 'Как с вами связаться?',
         fields: [
             { name: 'name', label: 'Ваше имя', type: 'text', required: true, autocomplete: 'name' },
-            { name: 'email', label: 'Email', type: 'email', required: true, autocomplete: 'email', placeholder: 'name@example.ru' },
+            { name: 'email', label: 'Электронная почта', type: 'email', required: true, autocomplete: 'email', placeholder: 'name@example.ru' },
             { name: 'phone', label: 'Телефон или Telegram', type: 'text', required: false, autocomplete: 'tel', placeholder: '+7 900 000-00-00 или @username' },
             { name: 'time', label: 'Удобное время для звонка', type: 'text', required: false, placeholder: 'Например, будни после 15:00' }
         ]
