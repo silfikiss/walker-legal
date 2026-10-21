@@ -1216,3 +1216,21 @@ main > .portrait:last-child {
         margin-bottom: 40px;
     }
 }
+
+/* === Логотип (файлы logo.svg и logo-light.svg) === */
+
+.brand img {
+    display: block;
+    height: 62px;
+    width: auto;
+}
+
+.ftr .brand img {
+    height: 66px;
+}
+
+@media (max-width: 700px) {
+    .brand img {
+        height: 52px;
+    }
+}
