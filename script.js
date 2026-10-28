@@ -69,6 +69,8 @@
     // Ключ Web3Forms (публичный по своей природе)
     const WEB3FORMS_KEY = '8c0237fe-b2fb-4dab-a9b1-6e9a4785fb96';
     const CONTACT_EMAIL = 'walkerlegal@yandex.ru';
+    // Адрес функции Yandex Cloud для приёма заявок. Пока пусто — заявки идут через Web3Forms.
+    const FORM_ENDPOINT = '';
     const CONSENT_VERSION = 'Согласие от 23.09.2026';
 
     const STEP_PROGRESS = {
@@ -664,7 +666,7 @@
 
         const payload = Object.assign(
             {
-                access_key: WEB3FORMS_KEY,
+                access_key: FORM_ENDPOINT ? undefined : WEB3FORMS_KEY,
                 subject: `Новая заявка с сайта Walker Legal — ${answers.name || 'без имени'}`,
                 from_name: 'Walker Legal',
                 replyto: answers.email,
@@ -677,7 +679,7 @@
             }
         );
 
-        fetch('https://api.web3forms.com/submit', {
+        fetch(FORM_ENDPOINT || 'https://api.web3forms.com/submit', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',

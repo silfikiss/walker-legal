@@ -1,0 +1,21 @@
+# Выкладка сайта в бакет Yandex Object Storage.
+# Пока запускается только вручную (Actions → Deploy to Yandex Cloud → Run workflow).
+# Нужны секреты репозитория: YC_ACCESS_KEY_ID, YC_SECRET_ACCESS_KEY (статический ключ сервисного аккаунта с ролью storage.editor).
+name: Deploy to Yandex Cloud
+on:
+  workflow_dispatch:
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Upload site to bucket
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.YC_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.YC_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ru-central1
+        run: |
+          aws s3 sync . s3://walkerlegal.ru \
+            --endpoint-url https://storage.yandexcloud.net \
+            --delete \
+            --exclude ".git/*" --exclude ".github/*" --exclude "cloud/*" --exclude "CNAME" --exclude "README*"
